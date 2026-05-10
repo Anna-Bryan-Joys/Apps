@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From the Card</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="From the Card" />
+  <meta name="theme-color" content="#1a1208" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #1a1208;
+      --bg2:     #231a0a;
+      --amber:   #e8a830;
+      --amber2:  #f0c060;
+      --cream:   #f5eed8;
+      --muted:   rgba(245,238,216,0.45);
+      --glass:   rgba(255,248,230,0.06);
+      --border:  rgba(255,248,230,0.14);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Ambient light */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 10%, rgba(232,168,48,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 90%, rgba(180,100,30,0.10) 0%, transparent 70%);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 36px;
+      background: linear-gradient(to bottom, rgba(26,18,8,0.9), transparent);
+    }
+    .brand {
+      font-family: Georgia, serif;
+      font-size: 17px;
+      font-weight: bold;
+      color: var(--amber2);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      cursor: pointer; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    /* SCREENS */
+    .screen { display: none; min-height: 100vh; padding: 100px 24px 60px; position: relative; z-index: 1; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; }
+
+    /* ── SCREEN: UPLOAD ── */
+    #screen-upload { justify-content: center; }
+
+    .hero-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: Georgia, serif;
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: bold; line-height: 1;
+      color: var(--cream); text-align: center; margin-bottom: 16px;
+    }
+    .hero-sub {
+      font-size: 18px; color: var(--muted); text-align: center;
+      max-width: 460px; line-height: 1.6; margin-bottom: 56px;
+    }
+
+    .upload-area {
+      width: 100%; max-width: 520px;
+      border: 1.5px dashed var(--border);
+      border-radius: 24px;
+      padding: 48px 36px;
+      text-align: center;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .upload-area:hover, .upload-area.drag-over {
+      border-color: var(--amber);
+      background: rgba(232,168,48,0.06);
+    }
+    .upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+    }
+    .upload-icon { font-size: 36px; margin-bottom: 14px; opacity: 0.6; }
+    .upload-title { font-size: 16px; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
+    .upload-hint { font-size: 13px; color: var(--muted); }
+
+    .divider {
+      display: flex; align-items: center; gap: 16px;
+      max-width: 520px; width: 100%; margin: 28px 0;
+      color: var(--muted); font-size: 12px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .text-input-area {
+      width: 100%; max-width: 520px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+    }
+    .text-input-area textarea {
+      width: 100%; height: 140px;
+      background: transparent; border: none; outline: none; resize: none;
+      color: var(--cream); font-family: Georgia, serif; font-size: 14px;
+      line-height: 1.7; caret-color: var(--amber);
+      scrollbar-width: none;
+    }
+    .text-input-area textarea::-webkit-scrollbar { display: none; }
+    .text-input-area textarea::placeholder { color: var(--muted); }
+
+    .btn-primary {
+      margin-top: 8px;
+      background: var(--amber); color: #1a1208;
+      border: none; border-radius: 40px;
+      padding: 14px 36px; font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: background 0.2s, transform 0.1s;
+      display: flex; align-items: center; gap: 8px;
+      align-self: flex-end;
+    }
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* ── SCREEN: READING ── */
+    #screen-reading { justify-content: center; align-items: center; text-align: center; }
+    .reading-icon {
+      font-size: 56px; margin-bottom: 28px;
+      animation: breathe 2.4s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
+    }
+    .reading-title {
+      font-family: Georgia, serif; font-size: 28px; margin-bottom: 12px;
+    }
+    .reading-sub { color: var(--muted); font-size: 15px; }
+
+    /* ── SCREEN: QUESTIONS ── */
+    #screen-questions { max-width: 900px; margin: 0 auto; }
+
+    .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; width: 100%; }
+    @media (max-width: 700px) { .q-grid { grid-template-columns: 1fr; } }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+    }
+
+    .card-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 14px;
+    }
+    .recipe-title-sm {
+      font-family: Georgia, serif; font-size: 22px;
+      font-weight: bold; margin-bottom: 14px;
+    }
+    .ingredient-list { list-style: none; }
+    .ingredient-list li {
+      font-size: 13px; color: var(--muted); padding: 5px 0;
+      border-bottom: 1px solid rgba(255,248,230,0.06);
+    }
+    .ingredient-list li:last-child { border: none; }
+
+    .step-list { list-style: none; counter-reset: steps; }
+    .step-list li {
+      counter-increment: steps;
+      font-size: 13px; color: var(--muted); padding: 7px 0 7px 28px;
+      border-bottom: 1px solid rgba(255,248,230,0.06);
+      position: relative; line-height: 1.5;
+    }
+    .step-list li:last-child { border: none; }
+    .step-list li::before {
+      content: counter(steps);
+      position: absolute; left: 0;
+      font-size: 10px; font-weight: 700; color: var(--amber);
+      top: 9px;
+    }
+
+    /* Chat */
+    .chat-col { display: flex; flex-direction: column; height: 100%; }
+    .chat-header { margin-bottom: 16px; }
+    .chat-messages {
+      flex: 1; overflow-y: auto; scrollbar-width: none;
+      display: flex; flex-direction: column; gap: 12px;
+      margin-bottom: 16px; min-height: 180px;
+    }
+    .chat-messages::-webkit-scrollbar { display: none; }
+
+    .msg {
+      padding: 10px 14px; border-radius: 14px;
+      font-size: 13px; line-height: 1.55; max-width: 90%;
+    }
+    .msg.claude {
+      background: rgba(232,168,48,0.12); border: 1px solid rgba(232,168,48,0.2);
+      color: var(--cream); align-self: flex-start; border-radius: 4px 14px 14px 14px;
+    }
+    .msg.user {
+      background: rgba(255,248,230,0.08); border: 1px solid var(--border);
+      color: var(--muted); align-self: flex-end; border-radius: 14px 4px 14px 14px;
+    }
+
+    .chat-input-row { display: flex; gap: 10px; }
+    .chat-input {
+      flex: 1; background: rgba(255,248,230,0.05);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px 14px; color: var(--cream); font-size: 13px;
+      outline: none; font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: var(--amber); }
+    .chat-send {
+      background: var(--amber); color: #1a1208;
+      border: none; border-radius: 12px;
+      padding: 10px 18px; font-weight: 700; font-size: 13px;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .chat-send:hover { background: var(--amber2); }
+
+    .finalize-row {
+      width: 100%; display: flex; justify-content: flex-end;
+      margin-top: 20px; gap: 12px;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 40px; padding: 12px 28px;
+      color: var(--muted); font-size: 14px;
+      cursor: pointer; transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--cream); border-color: var(--cream); }
+
+    /* ── SCREEN: RECIPE ── */
+    #screen-recipe { max-width: 680px; margin: 0 auto; }
+
+    .recipe-card {
+      width: 100%;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .recipe-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(to right, var(--amber), var(--amber2), var(--amber));
+    }
+
+    .recipe-card-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 12px;
+    }
+    .recipe-card-title {
+      font-family: Georgia, serif; font-size: 42px; font-weight: bold;
+      line-height: 1.1; margin-bottom: 10px; color: var(--cream);
+    }
+    .recipe-card-tagline {
+      font-family: Georgia, serif; font-size: 16px;
+      font-style: italic; color: var(--muted);
+      margin-bottom: 28px; line-height: 1.5;
+    }
+    .recipe-meta {
+      display: flex; gap: 28px; margin-bottom: 36px;
+      padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    }
+    .meta-item { }
+    .meta-item-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 3px;
+    }
+    .meta-item-value { font-size: 14px; color: var(--cream); }
+
+    .recipe-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 16px;
+    }
+    .recipe-ingredients {
+      list-style: none; margin-bottom: 36px;
+    }
+    .recipe-ingredients li {
+      display: flex; gap: 14px;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,248,230,0.06);
+      font-size: 14px;
+    }
+    .recipe-ingredients li:last-child { border: none; }
+    .ing-amount { color: var(--amber); font-weight: 600; min-width: 70px; }
+    .ing-item { color: var(--cream); }
+
+    .recipe-steps { list-style: none; counter-reset: rsteps; margin-bottom: 36px; }
+    .recipe-steps li {
+      counter-increment: rsteps;
+      padding: 12px 0 12px 44px;
+      border-bottom: 1px solid rgba(255,248,230,0.06);
+      font-size: 14px; color: var(--muted); line-height: 1.65;
+      position: relative;
+    }
+    .recipe-steps li:last-child { border: none; }
+    .recipe-steps li::before {
+      content: counter(rsteps);
+      position: absolute; left: 0; top: 14px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(232,168,48,0.15); border: 1px solid rgba(232,168,48,0.35);
+      color: var(--amber); font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .recipe-notes {
+      background: rgba(232,168,48,0.05);
+      border: 1px solid rgba(232,168,48,0.15);
+      border-radius: 14px; padding: 18px 20px;
+      font-family: Georgia, serif; font-size: 14px;
+      color: var(--muted); line-height: 1.7; margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    .recipe-story {
+      font-family: Georgia, serif; font-size: 15px;
+      color: rgba(245,238,216,0.35); line-height: 1.7;
+      text-align: center; padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .action-row {
+      display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap;
+    }
+
+    /* ── SCREEN: LIBRARY ── */
+    #screen-library { max-width: 720px; margin: 0 auto; }
+    .library-title {
+      font-family: Georgia, serif; font-size: 36px;
+      margin-bottom: 8px; width: 100%;
+    }
+    .library-sub { color: var(--muted); font-size: 15px; margin-bottom: 36px; width: 100%; }
+    .library-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .library-item {
+      background: var(--glass); backdrop-filter: blur(12px);
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px 24px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .library-item:hover { border-color: var(--amber); background: rgba(232,168,48,0.05); }
+    .library-item-title { font-family: Georgia, serif; font-size: 18px; margin-bottom: 4px; }
+    .library-item-tag { font-size: 12px; color: var(--muted); font-style: italic; }
+    .library-arrow { color: var(--amber); font-size: 18px; }
+    .library-empty { color: var(--muted); font-size: 15px; font-style: italic; margin-top: 20px; }
+
+    /* Transitions */
+    .fade-in { animation: fadeIn 0.4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="brand">From the Card</span>
+    <div class="nav-links">
+      <a onclick="showScreen('upload')">New Recipe</a>
+      <a onclick="showLibrary()">Library</a>
+    </div>
+  </nav>
+
+  <!-- UPLOAD -->
+  <div id="screen-upload" class="screen active">
+    <p class="hero-label">Preserve what matters</p>
+    <h1 class="hero-title">From<br>the Card.</h1>
+    <p class="hero-sub">Drop a photo of a recipe card, or type your notes. Claude reads the gaps, asks what it needs, and turns it into something lasting.</p>
+
+    <div class="upload-area" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*" />
+      <div class="upload-icon">📷</div>
+      <div class="upload-title">Drop a photo here</div>
+      <div class="upload-hint">JPG, PNG, HEIC — up to 10 MB</div>
+    </div>
+
+    <div class="divider">or type your notes</div>
+
+    <div class="text-input-area" style="width:100%;max-width:520px;">
+      <textarea id="textNotes" placeholder="2 cups flour, pinch of salt... bake til golden... gran always added a splash of something..."></textarea>
+      <button class="btn-primary" id="readTextBtn" style="margin-top:8px;">
+        Read these notes →
+      </button>
+    </div>
+  </div>
+
+  <!-- READING -->
+  <div id="screen-reading" class="screen">
+    <div class="reading-icon">📖</div>
+    <h2 class="reading-title">Reading the card…</h2>
+    <p class="reading-sub">Claude is finding the recipe inside your notes.</p>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="screen-questions" class="screen">
+    <div class="q-grid fade-in">
+      <div class="glass-card" id="recipePreview">
+        <div class="card-label">What we found</div>
+        <div class="recipe-title-sm" id="previewTitle"></div>
+        <div class="card-label" style="margin-top:16px;">Ingredients</div>
+        <ul class="ingredient-list" id="previewIngredients"></ul>
+        <div class="card-label" style="margin-top:16px;">Steps</div>
+        <ol class="step-list" id="previewSteps"></ol>
+      </div>
+      <div class="glass-card chat-col">
+        <div class="card-label">Let's fill the gaps</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="chatInput" placeholder="Type your answer…" />
+          <button class="chat-send" id="chatSend">Send</button>
+        </div>
+      </div>
+    </div>
+    <div class="finalize-row">
+      <button class="btn-secondary" onclick="finalize()">Looks good — finish it →</button>
+    </div>
+  </div>
+
+  <!-- RECIPE -->
+  <div id="screen-recipe" class="screen">
+    <div class="recipe-card fade-in" id="recipeCard">
+      <div class="recipe-card-label">From the Card</div>
+      <h1 class="recipe-card-title" id="rcTitle"></h1>
+      <p class="recipe-card-tagline" id="rcTagline"></p>
+      <div class="recipe-meta">
+        <div class="meta-item">
+          <div class="meta-item-label">Serves</div>
+          <div class="meta-item-value" id="rcServings"></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-item-label">Time</div>
+          <div class="meta-item-value" id="rcTime"></div>
+        </div>
+      </div>
+      <div class="recipe-section-title">Ingredients</div>
+      <ul class="recipe-ingredients" id="rcIngredients"></ul>
+      <div class="recipe-section-title">Method</div>
+      <ol class="recipe-steps" id="rcSteps"></ol>
+      <div class="recipe-notes" id="rcNotes"></div>
+      <p class="recipe-story" id="rcStory"></p>
+    </div>
+    <div class="action-row">
+      <button class="btn-secondary" onclick="window.print()">Print</button>
+      <button class="btn-secondary" onclick="showScreen('upload')">New recipe</button>
+      <button class="btn-secondary" onclick="showLibrary()">Library</button>
+    </div>
+  </div>
+
+  <!-- LIBRARY -->
+  <div id="screen-library" class="screen">
+    <div class="library-title">The Recipe Box</div>
+    <p class="library-sub">Everything you've brought in from the card.</p>
+    <div class="library-grid" id="libraryGrid"></div>
+  </div>
+
+  <script>
+    let sessionId = null;
+
+    function showScreen(name) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(`screen-${name}`).classList.add('active');
+    }
+
+    // ── UPLOAD ──
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) uploadImage(file);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files[0]) uploadImage(fileInput.files[0]); });
+
+    document.getElementById('readTextBtn').addEventListener('click', () => {
+      const text = document.getElementById('textNotes').value.trim();
+      if (!text) return;
+      readText(text);
+    });
+
+    async function uploadImage(file) {
+      showScreen('reading');
+      const form = new FormData();
+      form.append('image', file);
+      try {
+        const res = await fetch('/api/read', { method: 'POST', body: form });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        sessionId = data.sessionId;
+        showQuestions(data.recipe);
+      } catch (err) {
+        alert('Something went wrong: ' + err.message);
+        showScreen('upload');
+      }
+    }
+
+    async function readText(text) {
+      showScreen('reading');
+      try {
+        const res = await fetch('/api/read', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text }),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        sessionId = data.sessionId;
+        showQuestions(data.recipe);
+      } catch (err) {
+        alert('Something went wrong: ' + err.message);
+        showScreen('upload');
+      }
+    }
+
+    // ── QUESTIONS ──
+    function showQuestions(recipe) {
+      document.getElementById('previewTitle').textContent = recipe.title;
+
+      const ingList = document.getElementById('previewIngredients');
+      ingList.innerHTML = recipe.ingredients.map(i => `<li>${i}</li>`).join('');
+
+      const stepList = document.getElementById('previewSteps');
+      stepList.innerHTML = recipe.steps.map(s => `<li>${s}</li>`).join('');
+
+      const chat = document.getElementById('chatMessages');
+      chat.innerHTML = '';
+
+      if (recipe.story) addMessage('claude', `${recipe.story}`);
+
+      if (recipe.questions && recipe.questions.length) {
+        recipe.questions.forEach(q => addMessage('claude', q));
+      } else {
+        addMessage('claude', `This card read beautifully — no gaps I can see. Hit "finish it" whenever you're ready, or tell me anything you'd like to add.`);
+      }
+
+      showScreen('questions');
+    }
+
+    function addMessage(role, text) {
+      const chat = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+      div.textContent = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    document.getElementById('chatSend').addEventListener('click', sendChat);
+    document.getElementById('chatInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') sendChat();
+    });
+
+    async function sendChat() {
+      const input = document.getElementById('chatInput');
+      const msg = input.value.trim();
+      if (!msg || !sessionId) return;
+      input.value = '';
+      addMessage('user', msg);
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId, message: msg }),
+        });
+        const data = await res.json();
+        addMessage('claude', data.reply);
+      } catch (err) {
+        addMessage('claude', 'Sorry, something went wrong. Try again.');
+      }
+    }
+
+    // ── FINALIZE ──
+    async function finalize() {
+      showScreen('reading');
+      document.querySelector('#screen-reading .reading-title').textContent = 'Writing it up…';
+      document.querySelector('#screen-reading .reading-sub').textContent = 'Turning your notes into something lasting.';
+
+      try {
+        const res = await fetch('/api/finalize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId }),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        renderRecipe(data.recipe);
+      } catch (err) {
+        alert('Something went wrong: ' + err.message);
+        showScreen('questions');
+      }
+    }
+
+    function renderRecipe(r) {
+      document.getElementById('rcTitle').textContent = r.title;
+      document.getElementById('rcTagline').textContent = r.tagline || '';
+      document.getElementById('rcServings').textContent = r.servings || '—';
+      document.getElementById('rcTime').textContent = r.time || '—';
+
+      document.getElementById('rcIngredients').innerHTML = (r.ingredients || []).map(i =>
+        `<li><span class="ing-amount">${i.amount || ''}</span><span class="ing-item">${i.item || i}</span></li>`
+      ).join('');
+
+      document.getElementById('rcSteps').innerHTML = (r.steps || []).map(s =>
+        `<li>${s}</li>`
+      ).join('');
+
+      document.getElementById('rcNotes').textContent = r.notes || '';
+      document.getElementById('rcStory').textContent = r.story || '';
+
+      showScreen('recipe');
+    }
+
+    // ── LIBRARY ──
+    async function showLibrary() {
+      showScreen('library');
+      const grid = document.getElementById('libraryGrid');
+      grid.innerHTML = '<p class="library-empty">Loading…</p>';
+
+      const res = await fetch('/api/recipes');
+      const recipes = await res.json();
+
+      if (!recipes.length) {
+        grid.innerHTML = '<p class="library-empty">No recipes saved yet. Bring in your first card.</p>';
+        return;
+      }
+
+      grid.innerHTML = recipes.map(r => `
+        <div class="library-item" onclick="loadRecipe('${r.slug}')">
+          <div>
+            <div class="library-item-title">${r.title}</div>
+            <div class="library-item-tag">${r.tagline || ''}</div>
+          </div>
+          <span class="library-arrow">→</span>
+        </div>
+      `).join('');
+    }
+
+    async function loadRecipe(slug) {
+      const res = await fetch(`/api/recipes/${slug}`);
+      const r = await res.json();
+      renderRecipe(r);
+    }
+  </script>
+</body>
+</html>
