@@ -14,6 +14,7 @@ app.use(express.static('public'));
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const sessions = new Map();
 const RECIPES_DIR = path.join(__dirname, 'public', 'recipes');
+fs.mkdirSync(RECIPES_DIR, { recursive: true });
 
 const SYSTEM_PROMPT = `You are a warm, knowledgeable cooking companion helping to preserve and complete handwritten recipe notes. You understand that recipes carry memory, imprecision, and love. You fill gaps thoughtfully, ask only what matters, and write with warmth.`;
 
@@ -70,6 +71,7 @@ Return ONLY valid JSON (no markdown) with this shape:
 
 // Conversational clarification
 app.post('/api/chat', async (req, res) => {
+  try {
   const { sessionId, message } = req.body;
   const session = sessions.get(sessionId);
   if (!session) return res.status(404).json({ error: 'Session not found' });
@@ -98,25 +100,30 @@ app.post('/api/chat', async (req, res) => {
   session.messages.push({ role: 'assistant', content: reply });
 
   res.json({ reply });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Produce the final beautiful recipe
 app.post('/api/finalize', async (req, res) => {
-  const { sessionId } = req.body;
-  const session = sessions.get(sessionId);
-  if (!session) return res.status(404).json({ error: 'Session not found' });
+  try {
+    const { sessionId } = req.body;
+    const session = sessions.get(sessionId);
+    if (!session) return res.status(404).json({ error: 'Session not found' });
 
-  const convo = session.messages.length
-    ? `\n\nClarifications from conversation:\n${session.messages.map(m => `${m.role}: ${m.content}`).join('\n')}`
-    : '';
+    const convo = session.messages.length
+      ? `\n\nClarifications from conversation:\n${session.messages.map(m => `${m.role}: ${m.content}`).join('\n')}`
+      : '';
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 2000,
-    system: SYSTEM_PROMPT,
-    messages: [{
-      role: 'user',
-      content: `Create a complete, beautiful recipe from these notes and clarifications.
+    const response = await client.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2000,
+      system: SYSTEM_PROMPT,
+      messages: [{
+        role: 'user',
+        content: `Create a complete, beautiful recipe from these notes and clarifications.
 
 Original: ${JSON.stringify(session.recipe)}${convo}
 
@@ -131,16 +138,20 @@ Return ONLY valid JSON:
   "notes": "chef's notes, tips, variations",
   "story": "1–2 warm sentences about this dish's meaning or origin"
 }`,
-    }],
-  });
+      }],
+    });
 
-  const raw = response.content[0].text;
-  const final = JSON.parse(raw.match(/\{[\s\S]*\}/)[0]);
+    const raw = response.content[0].text;
+    const final = JSON.parse(raw.match(/\{[\s\S]*\}/)[0]);
 
-  const slug = final.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
-  fs.writeFileSync(path.join(RECIPES_DIR, `${slug}.json`), JSON.stringify(final, null, 2));
+    const slug = final.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
+    fs.writeFileSync(path.join(RECIPES_DIR, `${slug}.json`), JSON.stringify(final, null, 2));
 
-  res.json({ recipe: final });
+    res.json({ recipe: final });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Saved recipes
