@@ -772,23 +772,37 @@
       } catch (err) { alert('Something went wrong: ' + err.message); showScreen('questions'); }
     }
 
+    function esc(s) {
+      return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
     function renderRecipe(r) {
-      document.getElementById('rcTitle').textContent = r.title;
-      document.getElementById('rcTagline').textContent = r.tagline || '';
-      document.getElementById('rcServings').textContent = r.servings || '—';
-      document.getElementById('rcTime').textContent = r.time || '—';
+      try {
+        document.getElementById('rcTitle').textContent = r.title || '';
+        document.getElementById('rcTagline').textContent = r.tagline || '';
+        document.getElementById('rcServings').textContent = r.servings || '—';
+        document.getElementById('rcTime').textContent = r.time || '—';
 
-      document.getElementById('rcIngredients').innerHTML = (r.ingredients || []).map(i =>
-        `<li><span class="ing-amt">${i.amount || ''}</span><span class="ing-name">${i.item || i}</span></li>`
-      ).join('');
-      document.getElementById('rcSteps').innerHTML = (r.steps || []).map(s => `<li>${s}</li>`).join('');
+        const ings = Array.isArray(r.ingredients) ? r.ingredients : [];
+        document.getElementById('rcIngredients').innerHTML = ings.map(i =>
+          typeof i === 'string'
+            ? `<li><span class="ing-name">${esc(i)}</span></li>`
+            : `<li><span class="ing-amt">${esc(i.amount)}</span><span class="ing-name">${esc(i.item)}</span></li>`
+        ).join('');
 
-      const notes = r.notes || '';
-      document.getElementById('rcNotesWrap').style.display = notes ? '' : 'none';
-      document.getElementById('rcNotes').textContent = notes;
-      document.getElementById('rcStory').textContent = r.story || '';
+        const steps = Array.isArray(r.steps) ? r.steps : [];
+        document.getElementById('rcSteps').innerHTML = steps.map(s => `<li>${esc(s)}</li>`).join('');
 
-      showScreen('recipe');
+        const notes = r.notes || '';
+        document.getElementById('rcNotesWrap').style.display = notes ? '' : 'none';
+        document.getElementById('rcNotes').textContent = notes;
+        document.getElementById('rcStory').textContent = r.story || '';
+
+        showScreen('recipe');
+      } catch(err) {
+        console.error('renderRecipe failed:', err, r);
+        alert('Could not display recipe: ' + err.message);
+      }
     }
 
     /* ── Library ── */
