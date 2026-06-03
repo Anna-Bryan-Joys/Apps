@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generate Icons</title>
+<style>
+  body { font-family: sans-serif; background: #f3ebdd; color: #2c2620; padding: 2rem; }
+  canvas { display: none; }
+  .btn { display: inline-block; margin: 0.5rem; padding: 0.6rem 1.4rem; background: #c0883a; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 15px; }
+  .btn:hover { background: #a8722e; }
+  p { max-width: 40ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+<h2>Icon Generator — The Universal Laws</h2>
+<p>Click each button to download the icon. Then move both PNGs into <code>self-responsibility/icons/</code>.</p>
+
+<button class="btn" onclick="download(192)">Download icon-192.png</button>
+<button class="btn" onclick="download(512)">Download icon-512.png</button>
+
+<canvas id="c"></canvas>
+
+<script>
+function drawIcon(size) {
+  const c = document.getElementById('c');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const cx = size / 2, cy = size / 2;
+
+  // background
+  ctx.fillStyle = '#f3ebdd';
+  ctx.fillRect(0, 0, size, size);
+
+  // orb glow
+  const glow = ctx.createRadialGradient(cx, cy * 0.9, 0, cx, cy, size * 0.42);
+  glow.addColorStop(0, 'rgba(255,248,236,0.95)');
+  glow.addColorStop(0.55, '#c0883a');
+  glow.addColorStop(1, 'rgba(192,136,58,0)');
+  ctx.beginPath();
+  ctx.arc(cx, cy, size * 0.38, 0, Math.PI * 2);
+  ctx.fillStyle = glow;
+  ctx.fill();
+
+  // outer soft ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, size * 0.4, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(192,136,58,0.22)';
+  ctx.lineWidth = size * 0.025;
+  ctx.stroke();
+}
+
+function download(size) {
+  drawIcon(size);
+  const c = document.getElementById('c');
+  const a = document.createElement('a');
+  a.href = c.toDataURL('image/png');
+  a.download = `icon-${size}.png`;
+  a.click();
+}
+</script>
+</body>
+</html>

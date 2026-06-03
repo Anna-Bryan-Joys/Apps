@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Self-Responsibility · The Universal Laws</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#c0883a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="The Laws" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3ebdd;
+    --paper-deep:#ece2d0;
+    --ink:#2c2620;
+    --ink-soft:#6c6051;
+    --ink-faint:#a99c86;
+    --accent:#c0883a;
+    --accent-soft:#c0883a26;
+    --line:#d8cdb8;
+    --rise: cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader", Georgia, "Times New Roman", serif;
+    font-weight:300;
+    font-size:18px;
+    line-height:1.7;
+    overflow:hidden;
+    position:relative;
+  }
+  /* atmosphere: soft accent-tinted glow + warm vignette + faint grain */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 50% -10%, var(--accent-soft), transparent 60%),
+      radial-gradient(140% 120% at 50% 120%, #00000010, transparent 55%);
+    transition:background 1.4s ease;
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  #app{position:relative; z-index:1; height:100%; max-width:560px; margin:0 auto; display:flex; flex-direction:column;}
+
+  /* top bar */
+  .bar{display:flex; align-items:center; justify-content:space-between; padding:20px 24px 8px; min-height:54px;}
+  .brand{font-family:"Fraunces"; font-weight:400; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-faint);}
+  .leave{appearance:none; border:none; background:none; color:var(--ink-soft); font-family:"Fraunces"; font-size:13px; letter-spacing:.05em; cursor:pointer; padding:6px 8px; opacity:.85; transition:opacity .3s;}
+  .leave:hover{opacity:1;}
+  .leave.hidden{visibility:hidden;}
+
+  .stage{flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; transition:opacity .34s ease; padding:0 28px 40px;}
+  .stage.leaving{opacity:0;}
+  .stage{scrollbar-width:none; -ms-overflow-style:none;}
+  .stage::-webkit-scrollbar{display:none;}
+
+  .card{min-height:100%; display:flex; flex-direction:column; justify-content:center; padding:24px 0 8px; animation:rise .95s var(--rise) both;}
+  @keyframes rise{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;}}
+
+  .eyebrow{font-family:"Fraunces"; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin:0 0 18px; font-weight:500;}
+  .field-label{font-family:"Fraunces"; font-style:italic; font-weight:400; font-size:15px; letter-spacing:.02em; color:var(--ink-soft); margin:0 0 14px;}
+  .teaching{font-size:23px; line-height:1.62; font-weight:300; margin:0; letter-spacing:.004em;}
+  .teaching .accent{color:var(--accent);}
+
+  /* threshold */
+  .hero{text-align:center; padding-top:8px;}
+  .orb{width:96px; height:96px; margin:6px auto 30px; border-radius:50%;
+    background:radial-gradient(circle at 50% 42%, #fff8ec, var(--accent) 78%, transparent 100%);
+    box-shadow:0 0 50px -6px var(--accent-soft);
+    animation:breathe 8.5s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:scale(.86); opacity:.78;} 50%{transform:scale(1.06); opacity:1;}}
+  .hero h1{font-family:"Fraunces"; font-weight:300; font-size:34px; line-height:1.2; margin:0 0 10px; letter-spacing:.01em;}
+  .hero .sub{color:var(--ink-soft); font-size:18px; margin:0 auto 4px; max-width:30ch;}
+  .hint{font-family:"Fraunces"; font-style:italic; color:var(--ink-faint); font-size:15px; margin:34px 0 18px; text-align:center;}
+
+  .laws{list-style:none; padding:0; margin:0 0 18px;}
+  .law-btn{width:100%; text-align:left; appearance:none; background:none; border:none; border-top:1px solid var(--line);
+    padding:20px 4px; cursor:pointer; display:flex; align-items:baseline; gap:14px; transition:padding-left .4s var(--rise);}
+  .laws li:last-child .law-btn{border-bottom:1px solid var(--line);}
+  .law-btn:hover{padding-left:10px;}
+  .law-dot{width:9px; height:9px; border-radius:50%; flex:0 0 auto; transform:translateY(-2px); transition:transform .4s;}
+  .law-meta{flex:1;}
+  .law-name{font-family:"Fraunces"; font-weight:400; font-size:21px; color:var(--ink); margin:0; line-height:1.25;}
+  .law-essence{font-size:15px; color:var(--ink-soft); margin:4px 0 0; line-height:1.5;}
+  .kept-tick{font-family:"Fraunces"; font-style:italic; font-size:12px; color:var(--ink-faint); white-space:nowrap; align-self:center;}
+
+  /* mantra */
+  .mantra-wrap{text-align:center;}
+  .mantra-mark{font-family:"Fraunces"; font-size:46px; color:var(--accent); opacity:.55; line-height:0; display:block; height:24px;}
+  .mantra{font-family:"Fraunces"; font-style:italic; font-weight:300; font-size:27px; line-height:1.5; margin:18px auto 0; max-width:24ch;}
+
+  /* reflection */
+  .prompt{font-family:"Fraunces"; font-weight:300; font-size:24px; line-height:1.5; margin:0 0 22px;}
+  textarea{width:100%; min-height:150px; resize:none; background:#fbf6ec; border:1px solid var(--line); border-radius:14px;
+    padding:18px; font-family:"Newsreader",Georgia,serif; font-size:18px; line-height:1.65; color:var(--ink); font-weight:300;
+    outline:none; transition:border-color .4s, box-shadow .4s;}
+  textarea:focus{border-color:var(--accent); box-shadow:0 0 0 4px var(--accent-soft);}
+  textarea::placeholder{color:var(--ink-faint); font-style:italic;}
+  .past{margin-top:26px; border-top:1px solid var(--line); padding-top:18px;}
+  .past h4{font-family:"Fraunces"; font-style:italic; font-weight:400; font-size:14px; color:var(--ink-soft); margin:0 0 12px; letter-spacing:.02em;}
+  .past-item{font-size:16px; line-height:1.6; color:var(--ink); padding:10px 0; border-bottom:1px dashed var(--line);}
+  .past-item:last-child{border-bottom:none;}
+  .past-date{display:block; font-family:"Fraunces"; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); margin-top:5px;}
+
+  /* rest */
+  .rest{text-align:center;}
+  .rest .glyph{font-family:"Fraunces"; font-size:30px; color:var(--accent); opacity:.6;}
+  .rest h2{font-family:"Fraunces"; font-weight:300; font-size:28px; margin:18px 0 12px;}
+  .rest p{color:var(--ink-soft); max-width:28ch; margin:0 auto;}
+
+  /* controls */
+  .controls{display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:40px;}
+  .go{appearance:none; cursor:pointer; font-family:"Fraunces"; font-weight:400; font-size:15px; letter-spacing:.04em;
+    color:var(--paper); background:var(--ink); border:none; border-radius:40px; padding:14px 34px; transition:transform .3s var(--rise), background .4s;}
+  .go:hover{transform:translateY(-2px);}
+  .go.tone{background:var(--accent);}
+  .quiet{appearance:none; border:none; background:none; cursor:pointer; font-family:"Fraunces"; font-style:italic; font-size:15px; color:var(--ink-soft); padding:6px; transition:color .3s;}
+  .quiet:hover{color:var(--ink);}
+
+  .dots{display:flex; gap:9px; justify-content:center; margin-top:30px;}
+  .dot{width:6px; height:6px; border-radius:50%; background:var(--line); transition:background .4s, transform .4s;}
+  .dot.on{background:var(--accent); transform:scale(1.35);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  @media (max-width:380px){
+    .teaching{font-size:21px;} .hero h1{font-size:30px;} .prompt{font-size:21px;} .mantra{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="bar">
+    <span class="brand">The Universal Laws</span>
+    <button class="leave hidden" id="leave">leave</button>
+  </div>
+  <div class="stage" id="stage"></div>
+</div>
+
+<script>
+const LAWS = [
+  {
+    id:"cause-effect",
+    name:"Cause & Effect",
+    hue:"#c0883a",
+    essence:"Every result is preceded by a frequency. You are not the victim of the pattern — you are its origin.",
+    fields:[
+      {label:"In daily life", text:"When the same struggle keeps returning in a new costume, the invitation isn't to <span class='accent'>try harder</span>. It's to ask what frequency keeps creating it — and to become the kind of person who no longer does."},
+      {label:"With others", text:"Before you say a word, you've already set a tone. Notice the energy you bring — control or curiosity, proving or presence. Your power lives <span class='accent'>in the pattern</span>, not in their response."},
+      {label:"With self", text:"You are being the cause long before you act. Your self-talk, your nervous system, the beliefs beneath the surface — these are seeds. You can't harvest trust from soil you keep planting with doubt."},
+      {label:"With the world", text:"The collective is a mirror of causes we've all sustained. You don't shift it by carrying urgency. You shift it by <span class='accent'>holding your frequency steady</span> in a room that's forgotten how."},
+      {label:"With Source", text:"The Divine isn't a judge weighing your behavior — it's a field that reflects your resonance. You're not earning grace. You're aligning with what's already been offered."}
+    ],
+    mantra:"I am not the victim of my life — I am the frequency that shapes it.",
+    prompt:"What have you been unconsciously the cause of — and what are you now ready to consciously originate?"
+  },
+  {
+    id:"circulation",
+    name:"Circulation & Circuits",
+    hue:"#bc6b4e",
+    essence:"Energy moves in loops that seek completion. You are not just in the flow — you are the conductor of it.",
+    fields:[
+      {label:"In daily life", text:"Exhaustion often isn't from doing too much. It's from <span class='accent'>leaking too often</span>. Before taking on something new, ask what you're already committed to completing."},
+      {label:"With others", text:"Every relationship is a circuit of giving and receiving. When you feel drained or unseen, the loop may simply be incomplete — something offered but unreceived, something longed for but never asked for aloud."},
+      {label:"With self", text:"The most intimate circuit is the one between your body and your soul. Each impulse suppressed, each intuition delayed, leaves a loop open. You're rarely stuck — usually you're just <span class='accent'>incomplete</span>."},
+      {label:"With the world", text:"Your words ripple. Your choices echo into the field and return. You don't have to give everything away to matter — you only have to choose where your power wants to land."},
+      {label:"With Source", text:"Source is the circuit itself, always responding — not to what you ask for, but to the energy you live in. The return has already been sent. <span class='accent'>Opening it is what completes the loop.</span>"}
+    ],
+    mantra:"I am part of the sacred circuit. What I give in love returns multiplied.",
+    prompt:"Where have you left a circuit open — a desire undeclared, a decision delayed? What would it take to close it?"
+  },
+  {
+    id:"attraction-aversion",
+    name:"Attraction & Aversion",
+    hue:"#b07478",
+    essence:"What you align with, you become available for. And what you can't yet hold, you quietly push away.",
+    fields:[
+      {label:"In daily life", text:"You don't draw in what you wish for — you draw in the frequency you consistently live in. Sometimes you repel the very thing you want, because your field isn't yet a <span class='accent'>safe place</span> for it to land."},
+      {label:"With others", text:"The people you attract reflect your frequency, not your worth. Repeated patterns aren't punishments — they're portals, showing where you're still signaling for the familiar instead of the true."},
+      {label:"With self", text:"The loudest signal you broadcast is how you treat yourself in the quiet. Self-abandonment so often precedes outer disappointment — not because the world is punishing you, but because <span class='accent'>you've left your own side</span>."},
+      {label:"With the world", text:"What you withdraw from, you can no longer influence. Staying present with what's hard — without collapsing into it — keeps you a circuit of possible healing rather than numbness."},
+      {label:"With Source", text:"The field doesn't judge you; it reflects you. What you long for is already broadcasting. Your only work is becoming aligned enough to let it land."}
+    ],
+    mantra:"I am not chasing — I am aligning. I am becoming the one who receives it with a full heart.",
+    prompt:"What are you ready to become available for — and what would your field need, to feel safe enough to receive it?"
+  },
+  {
+    id:"resonance",
+    name:"Resonance",
+    hue:"#8f9457",
+    essence:"Like frequencies attract and amplify. You attune your essence — you don't force the outcome.",
+    fields:[
+      {label:"In daily life", text:"When things don't arrive, that isn't failure — it's <span class='accent'>feedback</span>. The field tunes into your essence, not your effort. Congruence, not perfection, is the work."},
+      {label:"With others", text:"You stop mistaking chemistry for compatibility. Notice who you feel more like yourself around, and who quietly pulls you out of alignment — then let resonance, not history, choose."},
+      {label:"With self", text:"Your body doesn't lie, and that's a gift. Drained means you're resonating with something false; expansive means you're home. Become your own <span class='accent'>vibrational mirror</span>."},
+      {label:"With the world", text:"You change the world not by reacting to it, but by resonating differently within it. Move through it like a tuning fork — and what belongs to your frequency finds you."},
+      {label:"With Source", text:"The Divine isn't distant — only misaligned. The signal hums beneath everything. Your part is to become available to it: through breath, beauty, gratitude, presence."}
+    ],
+    mantra:"When I return to the frequency of my truth, life meets me.",
+    prompt:"Where is curiosity gently drawing you — into a more expansive sense of what you want to live?"
+  },
+  {
+    id:"rhythm",
+    name:"Rhythm",
+    hue:"#a06a52",
+    essence:"Everything moves in cycles. Rest is not a pause in progress — it is progress.",
+    fields:[
+      {label:"In daily life", text:"You don't need to be constant — you need to be <span class='accent'>coherent</span>. Inspiration comes in waves; let it lead, and let rest restore. Creation without rhythm burns bright, then burns out."},
+      {label:"With others", text:"Everyone moves through their own cycle of readiness. Silence or distance isn't always rejection — sometimes it's simply a different rhythm. You can love someone without rushing their timing."},
+      {label:"With self", text:"Your needs change, and that doesn't make you inconsistent — it makes you alive. When your intuition goes quiet, it's integrating, not gone. Meet your energy with reverence, not resistance."},
+      {label:"With the world", text:"Not everything urgent is yours to carry. Listen for your inner rhythm before answering the outer pull, and your service becomes <span class='accent'>sustainable</span> instead of frantic."},
+      {label:"With Source", text:"The Divine is as present in the pause as in the peak. Silence isn't absence — sometimes it's the rest that prepares you to receive. You are always part of the music."}
+    ],
+    mantra:"I move with life — not ahead of it.",
+    prompt:"Where are you letting the world's pace override your own rhythm — and what would it feel like to choose alignment over urgency?"
+  }
+];
+
+/* ---- persistence (localStorage with window.storage fallback for Claude Artifacts) ---- */
+async function getVal(key){
+  try{ if(typeof window.storage !== 'undefined'){ const r = await window.storage.get(key); return r ? (r.value ?? r) : null; } }
+  catch(e){}
+  return localStorage.getItem(key);
+}
+async function setVal(key,val){
+  try{ if(typeof window.storage !== 'undefined'){ await window.storage.set(key,val); return; } }catch(e){}
+  localStorage.setItem(key, val);
+}
+async function loadReflections(id){
+  const raw = await getVal("reflection:"+id);
+  if(!raw) return [];
+  try{ const a = JSON.parse(raw); return Array.isArray(a)?a:[]; }catch(e){ return []; }
+}
+async function saveReflection(id,text){
+  const arr = await loadReflections(id);
+  arr.push({text:text, ts:Date.now()});
+  await setVal("reflection:"+id, JSON.stringify(arr));
+}
+function fmtDate(ts){
+  try{ return new Date(ts).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}); }
+  catch(e){ return ""; }
+}
+
+/* ---- state + rendering ---- */
+const stage = document.getElementById("stage");
+const leaveBtn = document.getElementById("leave");
+let state = { screen:"threshold", law:null, step:0 };
+
+function setAccent(hue){
+  const root = document.documentElement.style;
+  if(hue){ root.setProperty("--accent", hue); root.setProperty("--accent-soft", hue+"26"); }
+  else { root.setProperty("--accent","#c0883a"); root.setProperty("--accent-soft","#c0883a26"); }
+  // keep theme-color in sync for browser chrome
+  const tm = document.querySelector('meta[name="theme-color"]');
+  if(tm) tm.setAttribute('content', hue || '#c0883a');
+}
+
+async function go(next){
+  stage.classList.add("leaving");
+  await new Promise(r=>setTimeout(r,320));
+  Object.assign(state, next);
+  await render();
+  stage.classList.remove("leaving");
+  stage.scrollTop = 0;
+}
+
+async function render(){
+  leaveBtn.classList.toggle("hidden", state.screen==="threshold");
+  if(state.screen==="threshold") return renderThreshold();
+  if(state.screen==="field")     return renderField();
+  if(state.screen==="mantra")    return renderMantra();
+  if(state.screen==="reflect")   return renderReflect();
+  if(state.screen==="rest")      return renderRest();
+}
+
+async function renderThreshold(){
+  setAccent(null);
+  const counts = await Promise.all(LAWS.map(l=>loadReflections(l.id)));
+  let items = "";
+  LAWS.forEach((l,i)=>{
+    const n = counts[i].length;
+    const tick = n ? `<span class="kept-tick">${n} kept</span>` : "";
+    items += `<li><button class="law-btn" data-law="${l.id}">
+        <span class="law-dot" style="background:${l.hue}"></span>
+        <span class="law-meta"><span class="law-name">${l.name}</span>
+        <span class="law-essence">${l.essence}</span></span>${tick}
+      </button></li>`;
+  });
+  stage.innerHTML = `<div class="card">
+    <div class="hero">
+      <div class="orb"></div>
+      <h1>What's alive<br>in you right now?</h1>
+      <p class="sub">Five laws of self-responsibility. If drawn to explore on any given day, let one find you, rather than reaching for all of them.</p>
+    </div>
+    <p class="hint">choose the one that hums</p>
+    <ul class="laws">${items}</ul>
+  </div>`;
+  stage.querySelectorAll(".law-btn").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const law = LAWS.find(x=>x.id===b.dataset.law);
+      setAccent(law.hue);
+      go({screen:"field", law:law, step:0});
+    });
+  });
+}
+
+function fieldDots(active){
+  return `<div class="dots">${state.law.fields.map((_,i)=>`<span class="dot ${i===active?'on':''}"></span>`).join("")}</div>`;
+}
+
+async function renderField(){
+  const law = state.law, f = law.fields[state.step];
+  const last = state.step === law.fields.length-1;
+  stage.innerHTML = `<div class="card">
+    <p class="eyebrow">${law.name}</p>
+    <p class="field-label">${f.label}</p>
+    <p class="teaching">${f.text}</p>
+    ${fieldDots(state.step)}
+    <div class="controls">
+      <button class="go" id="next">${last ? "the mantra" : "continue"}</button>
+    </div>
+  </div>`;
+  document.getElementById("next").addEventListener("click",()=>{
+    if(last) go({screen:"mantra"});
+    else go({screen:"field", step:state.step+1});
+  });
+}
+
+async function renderMantra(){
+  const law = state.law;
+  stage.innerHTML = `<div class="card">
+    <div class="mantra-wrap">
+      <span class="mantra-mark">&ldquo;</span>
+      <p class="mantra">${law.mantra}</p>
+    </div>
+    <div class="controls">
+      <button class="go tone" id="next">sit with it &amp; reflect</button>
+      <button class="quiet" id="rest">not now — let it rest</button>
+    </div>
+  </div>`;
+  document.getElementById("next").addEventListener("click",()=>go({screen:"reflect"}));
+  document.getElementById("rest").addEventListener("click",()=>go({screen:"rest"}));
+}
+
+async function renderReflect(){
+  const law = state.law;
+  const past = await loadReflections(law.id);
+  let pastHtml = "";
+  if(past.length){
+    const items = past.slice().reverse().map(p=>
+      `<div class="past-item">${escapeHtml(p.text)}<span class="past-date">${fmtDate(p.ts)}</span></div>`
+    ).join("");
+    pastHtml = `<div class="past"><h4>what you've left here before</h4>${items}</div>`;
+  }
+  stage.innerHTML = `<div class="card">
+    <p class="eyebrow">${law.name}</p>
+    <p class="prompt">${law.prompt}</p>
+    <textarea id="ta" placeholder="In your own words&hellip;"></textarea>
+    <div class="controls">
+      <button class="go tone" id="keep">keep this</button>
+      <button class="quiet" id="skip">leave it unwritten</button>
+    </div>
+    ${pastHtml}
+  </div>`;
+  const ta = document.getElementById("ta");
+  setTimeout(()=>ta.focus(),400);
+  document.getElementById("keep").addEventListener("click", async ()=>{
+    const v = ta.value.trim();
+    if(v){ await saveReflection(law.id, v); }
+    go({screen:"rest"});
+  });
+  document.getElementById("skip").addEventListener("click",()=>go({screen:"rest"}));
+}
+
+async function renderRest(){
+  stage.innerHTML = `<div class="card">
+    <div class="rest">
+      <div class="glyph">&#10047;</div>
+      <h2>Let this land.</h2>
+      <p>You don't need the next law tonight. The rest is part of the rhythm — return when it's right.</p>
+    </div>
+    <div class="controls">
+      <button class="go" id="home">return to the threshold</button>
+    </div>
+  </div>`;
+  document.getElementById("home").addEventListener("click",()=>go({screen:"threshold", law:null, step:0}));
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+leaveBtn.addEventListener("click",()=>go({screen:"threshold", law:null, step:0}));
+
+/* ---- service worker registration ---- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+
+render();
+</script>
+</body>
+</html>
