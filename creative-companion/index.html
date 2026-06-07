@@ -606,13 +606,19 @@ var DEFAULT={
  horizon:"Offering my work openly and often, without armour.",
  jupiter:"People who feel the sincerity, not the polish.",
  jupiterCard:"", plutoCard:"", jupiterCode:"", plutoCode:"", hermesPluto:"", hermesJupiter:"", birthCard:"", birthCardName:"", spaceLede:"Arrive as honestly — and as playfully — as you like. Nothing here is owed. The Universe wants to be fulfilled through your fulfillment. You’re invited each week to consciously choose to compound your step. Let time reveal to you it’s magic by devoting 90 days.", spaceWhere:"You’re always ready somewhere — what if nothing in life was a test? But a growing curiosity becoming real? Where are you already leaning, even a little? Check in each day and celebrate your momentum.",
- level:0, mode:"open", compass:null, draft:"", log:[]
+ level:0, mode:"open", compass:null, draft:"", log:[], apiKey:""
 };
 var S=JSON.parse(JSON.stringify(DEFAULT));
 var STORE_KEY="creative-companion-v2";
 var hasStore=(typeof window!=="undefined"&&window.storage&&typeof window.storage.get==="function");
-function save(){ if(!hasStore)return; try{window.storage.set(STORE_KEY,JSON.stringify(S),false);}catch(e){} }
-async function load(){ if(!hasStore)return; try{var r=await window.storage.get(STORE_KEY,false); if(r&&r.value){Object.assign(S,JSON.parse(r.value));}}catch(e){} }
+function save(){
+  try{localStorage.setItem(STORE_KEY,JSON.stringify(S));}catch(e){}
+  if(hasStore){try{window.storage.set(STORE_KEY,JSON.stringify(S),false);}catch(e){}}
+}
+async function load(){
+  if(hasStore){try{var r=await window.storage.get(STORE_KEY,false);if(r&&r.value){Object.assign(S,JSON.parse(r.value));return;}}catch(e){}}
+  try{var d=localStorage.getItem(STORE_KEY);if(d){Object.assign(S,JSON.parse(d));}}catch(e){}
+}
 
 function el(h){var t=document.createElement("template");t.innerHTML=h.trim();return t.content.firstChild;}
 function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -1130,8 +1136,8 @@ function lazaroPrompt(type, title, body){
   }
 }
 
-function getStoredKey(){ try{return localStorage.getItem("lazaro-api-key")||"";}catch(e){return "";} }
-function storeKey(k){ try{localStorage.setItem("lazaro-api-key",k);}catch(e){} }
+function getStoredKey(){ return S.apiKey||(function(){try{return localStorage.getItem("lazaro-api-key")||"";}catch(e){return "";}})(); }
+function storeKey(k){ S.apiKey=k; save(); try{localStorage.setItem("lazaro-api-key",k);}catch(e){} }
 
 function callAnthropicDirect(key, type, title, body){
   return fetch("https://api.anthropic.com/v1/messages",{
