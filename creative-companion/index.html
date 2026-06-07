@@ -425,7 +425,7 @@
     border:1px solid rgba(210,154,166,.18);
     border-radius:22px;
     padding:1.3rem 1.45rem;
-    margin-top:1.2rem;
+    margin-top:0;
     box-shadow:0 1px 0 rgba(210,154,166,.04) inset,0 18px 40px -28px rgba(0,0,0,.7);
   }
   .pluto-card::before{
@@ -769,14 +769,24 @@ function screenSpace(){
    '<p class="eyebrow"><button class="link" id="back-space" style="color:var(--ink-faint);font-size:.82rem;margin-right:.8rem;">←</button>'+esc(truncate(S.change,40))+'<button class="edit" id="edit">edit</button></p>'+
    '<p class="lede" id="lede-ce" contenteditable="true" spellcheck="false" data-ph="Your lede..." style="margin-top:.7rem;padding:.2rem .3rem;border-radius:6px;">'+esc(S.spaceLede)+'</p>'+
 
-   // Progress card
-   '<div class="card" style="margin-top:1.5rem">'+
+   '<div style="margin-top:2rem">'+
+     '<h2>Where are you ready?</h2>'+
+     '<p class="lede soft" id="where-ce" contenteditable="true" spellcheck="false" data-ph="Where are you leaning..." style="font-size:1.1rem;padding:.2rem .3rem;border-radius:6px;">'+esc(S.spaceWhere)+'</p>'+
+     '<div class="field" style="margin-top:1.1rem">'+
+       '<label style="font-size:1.05rem">Say it your way</label>'+
+       '<textarea id="draft" placeholder="Where I’m already reaching...">'+esc(S.draft)+'</textarea>'+
+       '<div style="margin-top:.8rem"><button class="btn-ghost" id="keep">Keep this</button></div>'+
+     '</div>'+
+   '</div>'+
+
+
+   // Progress card (color change)
+   '<div class="card" style="margin-top:2rem">'+
      '<div class="faint" style="font-size:.95rem">Right now you’re living this at</div>'+
      '<div class="now">'+lvl+'<small>%</small></div>'+
      rampHTML(true)+
      '<div class="compound">Each small step compounds the last. (Reset at weeks end and begin again)</div>'+
    '</div>'+
-
 
 
    // Pluto card
@@ -796,7 +806,7 @@ function screenSpace(){
            '<div class="jup-reveal-body">'+esc(body)+(body.length>=400?'...':'')+'</div>'+
          '</div>'+
        '</div>':'';
-     return '<div class="pluto-card">'+
+     return '<div class="pluto-card" style="margin-top:.9rem">'+
        '<div class="pluto-eyebrow">Your Pluto'+(title?' — '+esc(title):'')+' </div>'+
        '<div class="pluto-theme">'+esc(calling)+'</div>'+
        '<div class="pluto-sub">This is the edge. The place your chart is asking you to walk toward.</div>'+
@@ -804,33 +814,13 @@ function screenSpace(){
        hermesHtml+
      '</div>';
    })()+
-
-   '<div style="margin-top:2rem">'+
-     '<h2>Where are you ready?</h2>'+
-     '<p class="lede soft" id="where-ce" contenteditable="true" spellcheck="false" data-ph="Where are you leaning..." style="font-size:1.1rem;padding:.2rem .3rem;border-radius:6px;">'+esc(S.spaceWhere)+'</p>'+
-     '<div class="field" style="margin-top:1.1rem">'+
-       '<label style="font-size:1.05rem">Say it your way</label>'+
-       '<textarea id="draft" placeholder="Where I’m already reaching...">'+esc(S.draft)+'</textarea>'+
-       '<div style="margin-top:.8rem"><button class="btn-ghost" id="keep">Keep this</button></div>'+
-     '</div>'+
-   '</div>'+
    // Jupiter card
    '<div class="jupiter-card">'+
      '<div class="jupiter-eyebrow">Your Jupiter is active'+(S.jupiterCode&&(typeof CARDS!=="undefined")&&CARDS[S.jupiterCode]?' — '+esc(CARDS[S.jupiterCode].t):'')+' </div>'+
      '<div class="jupiter-theme">'+esc(jupCard)+'</div>'+
      '<div class="jupiter-sub">This is the current that carries you. Let the Pluto work happen inside it.</div>'+
      (S.hermesJupiter?'<div class="hermes-reading hermes-reading-jup"><span class="hermes-eyebrow">Hermes</span>'+esc(S.hermesJupiter)+'</div>':'')+
-     '<button class="jup-reveal-btn" id="jup-reveal-btn">See the full card ↓</button>'+
-     '<div class="jup-reveal" id="jup-reveal">'+
-       '<div class="jup-reveal-inner">'+
-         (function(){
-           var cd=(typeof CARDS!=="undefined"&&S.jupiterCode)?CARDS[S.jupiterCode]:null;
-           if(cd) return '<div class="jup-reveal-title">'+esc(cd.t)+'</div>'+
-             '<div class="jup-reveal-body">'+esc(cd.b)+(cd.b.length>=400?"...":"")+"</div>";
-           return "<div class='jup-reveal-body'>Your Jupiter card description will appear here once you choose your card in setup.</div>";
-         })()+'<div class="jup-reveal-cta">Open your Life Chart to explore the full reading.</div>'+
-       '</div>'+
-     '</div>'+
+
    '</div>'+
 
 
@@ -1019,7 +1009,8 @@ var BDAY_DAYS_IN_MONTH = [31,29,31,30,31,30,31,31,30,31,30,31];
 
 function getBirthCard(month, day){
   if(!month||!day) return null;
-  var idx = BDAY_MONTH_STARTS[month-1] + day - 1;
+  if(month===12&&day===31) return 'JOKER';
+  var idx = ((month-1)*2 + (day-1)) % 26;
   return BDAY_SEQ[idx] || null;
 }
 
@@ -1129,11 +1120,11 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 // ── Lazaro direct API (fallback when companion-server.py not running) ─────────
-var LAZARO_SYSTEM = "You are Lazaro — a quiet interpreter of the Destiny Cards. Speak directly to the person in second person. Two sentences only. No metaphysical jargon. Specific, lived, direct.";
+var LAZARO_SYSTEM = "You are Lazaro — a warm, quiet interpreter of the Destiny Cards. Speak directly to the person in second person. Two sentences only. Grounded in this specific card's nature. Compassionate and specific — never generic, never a lecture.";
 
 function lazaroPrompt(type, title, body){
   if(type==="pluto"){
-    return "Pluto card — "+title+":\n"+body+"\n\nIn exactly 2 sentences, name the specific edge this card is asking this person to walk toward — direct and true to this card’s particular quality. Then let the second sentence carry a tender quality: not softening the edge, but offering a gentle sense of where to place the next step, as if someone who deeply believes in them is pointing the way forward.";
+    return "Pluto card — "+title+":\n"+body+"\n\nIn 2 sentences, speak directly to this person from the quality of this specific card — what it naturally stirs or calls toward in them, drawn from this card's own essence rather than a label. Then: where the next breath forward might live — tender, specific, as if someone who wholly believes in them is quietly pointing the way.";
   } else {
     return "Jupiter card — "+title+":\n"+body+"\n\nIn 2 sentences, describe what this Jupiter card is already drawing toward this person and quietly breathing through them — not as guidance but as a living current they are already inside of. Write it as recognition of what is naturally flowing to them and through them from this card’s essence, without effort or instruction. Poetic, expansive, second person, specific to this card.";
   }
@@ -1153,7 +1144,7 @@ function callAnthropicDirect(key, type, title, body){
     },
     body:JSON.stringify({
       model:"claude-haiku-4-5-20251001",
-      max_tokens:140,
+      max_tokens:180,
       system:LAZARO_SYSTEM,
       messages:[{role:"user",content:lazaroPrompt(type,title,body)}]
     })
