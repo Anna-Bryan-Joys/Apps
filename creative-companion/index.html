@@ -606,7 +606,7 @@ var DEFAULT={
  horizon:"Offering my work openly and often, without armour.",
  jupiter:"People who feel the sincerity, not the polish.",
  jupiterCard:"", plutoCard:"", jupiterCode:"", plutoCode:"", hermesPluto:"", hermesJupiter:"", birthCard:"", birthCardName:"", spaceLede:"Arrive as honestly — and as playfully — as you like. Nothing here is owed. The Universe wants to be fulfilled through your fulfillment. You’re invited each week to consciously choose to compound your step. Let time reveal to you it’s magic by devoting 90 days.", spaceWhere:"You’re always ready somewhere — what if nothing in life was a test? But a growing curiosity becoming real? Where are you already leaning, even a little? Check in each day and celebrate your momentum.",
- level:0, mode:"open", compass:null, draft:"", log:[], apiKey:""
+ level:0, mode:"open", compass:null, draft:"", log:[]
 };
 var S=JSON.parse(JSON.stringify(DEFAULT));
 var STORE_KEY="creative-companion-v2";
@@ -885,7 +885,7 @@ function screenSpace(){
     };
   }
 
-  // Hermes reading
+  // Lazaro reading (local companion-server.py)
   (function(){
     function callHermes(){
       var pc2=(typeof CARDS!=='undefined'&&S.plutoCode)?CARDS[S.plutoCode]:null;
@@ -893,22 +893,6 @@ function screenSpace(){
       if(!pc2||!jc2){flash('Choose your birthday first.');return;}
       var btn2=document.getElementById('hermes-ask')||document.getElementById('hermes-regen');
       if(btn2){btn2.textContent='reading…';btn2.disabled=true;}
-
-      function withKey(key){
-        Promise.all([
-          callAnthropicDirect(key,'pluto',pc2.t,pc2.b),
-          callAnthropicDirect(key,'jupiter',jc2.t,jc2.b)
-        ]).then(function(r){
-          S.hermesPluto=r[0]||'';
-          S.hermesJupiter=r[1]||'';
-          save();render();
-        }).catch(function(){
-          flash('Lazaro couldn’t connect. Check your API key.');
-          if(btn2){btn2.textContent='Ask Lazaro ↓';btn2.disabled=false;}
-        });
-      }
-
-      // Try local server first, fall back to direct API
       fetch('/hermes',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -919,13 +903,8 @@ function screenSpace(){
         S.hermesJupiter=d.jupiter||'';
         save();render();
       }).catch(function(){
-        var key=getStoredKey();
-        if(!key){
-          if(btn2){btn2.textContent='Ask Lazaro ↓';btn2.disabled=false;}
-          openKeyPrompt(function(k){ callHermes(); });
-        } else {
-          withKey(key);
-        }
+        flash('Start companion-server.py first, then try again.');
+        if(btn2){btn2.textContent='Ask Lazaro ↓';btn2.disabled=false;}
       });
     }
     var ha=document.getElementById('hermes-ask');
@@ -1126,64 +1105,6 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 // ── Lazaro direct API (fallback when companion-server.py not running) ─────────
-var LAZARO_SYSTEM = "You are Lazaro — a warm, quiet interpreter of the Destiny Cards. Speak directly to the person in second person. Two sentences only. Grounded in this specific card's nature. Compassionate and specific — never generic, never a lecture.";
-
-function lazaroPrompt(type, title, body){
-  if(type==="pluto"){
-    return "Pluto card — "+title+":\n"+body+"\n\nIn 2 sentences, speak directly to this person from the quality of this specific card — what it naturally stirs or calls toward in them, drawn from this card's own essence rather than a label. Then: where the next breath forward might live — tender, specific, as if someone who wholly believes in them is quietly pointing the way.";
-  } else {
-    return "Jupiter card — "+title+":\n"+body+"\n\nIn 2 sentences, describe what this Jupiter card is already drawing toward this person and quietly breathing through them — not as guidance but as a living current they are already inside of. Write it as recognition of what is naturally flowing to them and through them from this card’s essence, without effort or instruction. Poetic, expansive, second person, specific to this card.";
-  }
-}
-
-function getStoredKey(){ return S.apiKey||(function(){try{return localStorage.getItem("lazaro-api-key")||"";}catch(e){return "";}})(); }
-function storeKey(k){ S.apiKey=k; save(); try{localStorage.setItem("lazaro-api-key",k);}catch(e){} }
-
-function callAnthropicDirect(key, type, title, body){
-  return fetch("https://api.anthropic.com/v1/messages",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "x-api-key":key,
-      "anthropic-version":"2023-06-01",
-      "anthropic-dangerous-direct-browser-access":"true"
-    },
-    body:JSON.stringify({
-      model:"claude-haiku-4-5-20251001",
-      max_tokens:180,
-      system:LAZARO_SYSTEM,
-      messages:[{role:"user",content:lazaroPrompt(type,title,body)}]
-    })
-  }).then(function(r){return r.json();})
-  .then(function(d){return d.content[0].text.trim();});
-}
-
-var _keyCallback=null;
-function openKeyPrompt(cb){
-  _keyCallback=cb;
-  var o=document.getElementById("key-prompt");
-  if(o) o.classList.add("open");
-}
-function closeKeyPrompt(){
-  var o=document.getElementById("key-prompt");
-  if(o) o.classList.remove("open");
-  _keyCallback=null;
-}
-
-document.addEventListener("DOMContentLoaded",function(){
-  var ki=document.getElementById("key-input");
-  var kc=document.getElementById("key-confirm");
-  var kx=document.getElementById("key-cancel");
-  if(kx) kx.addEventListener("click",closeKeyPrompt);
-  if(kc) kc.addEventListener("click",function(){
-    var k=(ki?ki.value:"").trim();
-    if(!k) return;
-    storeKey(k);
-    closeKeyPrompt();
-    if(_keyCallback) _keyCallback(k);
-  });
-});
-
 </script>
 <div id="bday-picker" class="bday-picker-overlay">
   <div class="bday-box">
@@ -1210,19 +1131,6 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="bday-actions">
       <button class="bday-cancel" id="bday-cancel">Cancel</button>
       <button class="btn bday-confirm" id="bday-confirm" style="display:none;">Save my card</button>
-    </div>
-  </div>
-</div>
-<div id="key-prompt" class="bday-picker-overlay">
-  <div class="bday-box">
-    <div class="bday-title">Connect Lazaro</div>
-    <div class="bday-subtitle">Enter your Anthropic API key to enable personalized readings. It stays in your browser only — never sent anywhere except Anthropic.</div>
-    <div class="field" style="margin-top:1rem">
-      <input type="password" id="key-input" placeholder="sk-ant-..." style="margin-top:0">
-    </div>
-    <div class="bday-actions" style="margin-top:1.2rem">
-      <button class="bday-cancel" id="key-cancel">Cancel</button>
-      <button class="btn bday-confirm" id="key-confirm">Connect</button>
     </div>
   </div>
 </div>
