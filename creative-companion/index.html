@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark">
+<title>A 90-Day Creative Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..420&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#17140e; --bg-card:#221d15; --dot-empty:rgba(241,235,220,.13);
+    --ink:#f7f2e7; --ink-soft:#d2c7ad; --ink-faint:#a2957a;
+    --line:rgba(241,235,220,.15); --line-soft:rgba(241,235,220,.08);
+    --pluto:#d29aa6; --pluto-deep:#7a3a4a; --pluto-soft:#8c545f;
+    --jupiter:#e2b45c; --jupiter-soft:#7d6634; --jupiter-bg:rgba(226,180,92,.07);
+    --display:'Fraunces',Georgia,'Times New Roman',serif;
+    --body:'Newsreader',Georgia,'Times New Roman',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--body);color:var(--ink);line-height:1.62;
+    background:
+      radial-gradient(56% 40% at 50% 0%, rgba(249,245,233,.34) 0%, rgba(248,243,228,.14) 26%, rgba(248,243,228,.04) 48%, rgba(248,243,228,0) 70%),
+      radial-gradient(120% 95% at 50% -12%, rgba(228,214,178,.12) 0%, rgba(228,214,178,0) 55%),
+      radial-gradient(90% 60% at 112% 108%, rgba(226,180,92,.07) 0%, rgba(226,180,92,0) 55%),
+      radial-gradient(80% 60% at -12% 98%, rgba(210,154,166,.06) 0%, rgba(210,154,166,0) 55%),
+      var(--bg);
+    background-attachment:fixed;-webkit-font-smoothing:antialiased;position:relative;min-height:100%;
+    transition:background 2.2s ease;
+  }
+  /* Pre-dawn — setup screen */
+  body.screen-setup{
+    background:
+      radial-gradient(75% 55% at 50% 0%, rgba(255,218,80,.32) 0%, rgba(245,195,60,.16) 28%, rgba(235,175,50,.06) 50%, transparent 70%),
+      radial-gradient(55% 40% at 85% -5%, rgba(255,200,70,.18) 0%, rgba(230,165,40,.08) 40%, transparent 65%),
+      radial-gradient(40% 35% at 15% 95%, rgba(180,110,40,.08) 0%, transparent 55%),
+      radial-gradient(60% 40% at 50% 105%, rgba(200,130,50,.06) 0%, transparent 55%),
+      #1c1508;
+  }
+  /* Deep space — main space screen */
+  body.screen-space{
+    background:
+      /* soft zenith — diffuse, off-centre so it doesn't read as a disc */
+      radial-gradient(72% 48% at 42% -4%, rgba(140,200,255,.22) 0%, rgba(100,165,240,.10) 32%, transparent 62%),
+      /* secondary scatter top-right */
+      radial-gradient(38% 35% at 84% 6%, rgba(120,175,248,.10) 0%, rgba(90,145,230,.04) 48%, transparent 70%),
+      /* faint violet depth left-mid */
+      radial-gradient(44% 38% at -2% 52%, rgba(130,80,210,.06) 0%, transparent 55%),
+      /* subtle warm undertow lower-right */
+      radial-gradient(55% 40% at 96% 82%, rgba(80,60,160,.06) 0%, transparent 52%),
+      /* deep vignette bottom */
+      radial-gradient(80% 45% at 50% 118%, rgba(4,10,28,.85) 0%, transparent 58%),
+      #090e1c;
+  }
+  /* Sunrise — arc screen */
+  body.screen-arc{
+    background:
+      radial-gradient(100% 55% at 50% 115%, rgba(255,200,60,.72) 0%, rgba(255,140,20,.48) 20%, rgba(220,80,10,.24) 44%, transparent 66%),
+      radial-gradient(70% 45% at 50% 110%, rgba(255,230,100,.42) 0%, rgba(255,170,40,.24) 28%, transparent 52%),
+      radial-gradient(90% 60% at 50% 108%, rgba(255,100,30,.22) 0%, rgba(200,50,20,.10) 38%, transparent 58%),
+      radial-gradient(110% 50% at 30% 112%, rgba(255,180,50,.18) 0%, transparent 48%),
+      radial-gradient(110% 50% at 70% 112%, rgba(255,140,60,.16) 0%, transparent 48%),
+      radial-gradient(100% 60% at 50% 0%, rgba(14,6,30,.98) 0%, rgba(18,8,36,.85) 35%, rgba(28,12,48,.55) 58%, transparent 78%),
+      #0a0412;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(125% 85% at 50% 26%, rgba(0,0,0,0) 42%, rgba(0,0,0,.42) 100%);}
+  .wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:54px 26px 150px;}
+  .eyebrow{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;}
+  .eyebrow .edit{margin-left:.6rem;border:0;background:none;color:var(--pluto);font-family:var(--body);font-size:.7rem;letter-spacing:.1em;text-transform:none;border-bottom:1px solid var(--pluto-soft);cursor:pointer;padding:0 0 1px;}
+  h1{font-family:var(--display);font-weight:400;font-optical-sizing:auto;font-size:2.7rem;line-height:1.06;letter-spacing:-.01em;margin:.5rem 0 0;color:var(--ink);}
+  h2{font-family:var(--display);font-weight:400;font-size:1.7rem;line-height:1.16;letter-spacing:-.01em;color:var(--ink);}
+  .lede{font-size:1.18rem;margin-top:1.4rem;font-weight:380;}
+  .soft{color:var(--ink-soft);} .faint{color:var(--ink-faint);} em{font-style:italic;color:var(--ink);}
+  .reveal>*{opacity:0;transform:translateY(10px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;}
+  .reveal>*:nth-child(1){animation-delay:.05s}.reveal>*:nth-child(2){animation-delay:.15s}
+  .reveal>*:nth-child(3){animation-delay:.25s}.reveal>*:nth-child(4){animation-delay:.35s}
+  .reveal>*:nth-child(5){animation-delay:.45s}.reveal>*:nth-child(6){animation-delay:.55s}
+  .reveal>*:nth-child(7){animation-delay:.65s}.reveal>*:nth-child(8){animation-delay:.75s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal>*{animation:none;opacity:1;transform:none}}
+  button{font-family:var(--body);cursor:pointer;}
+  .btn{display:inline-block;font-size:1.02rem;color:var(--bg);background:var(--ink);border:0;border-radius:40px;padding:.82rem 1.7rem;transition:transform .25s,filter .25s;}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.08);}
+  .btn-pluto{background:var(--pluto-deep);color:#fbeef0;} .btn-pluto:hover{filter:brightness(1.12);transform:translateY(-1px);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .btn-ghost:hover{background:rgba(241,235,220,.06);transform:translateY(-1px);}
+  .choices{display:flex;flex-direction:column;gap:.7rem;margin-top:1.2rem;}
+  .choices .btn,.choices .btn-ghost{width:100%;text-align:left;border-radius:18px;padding:1.05rem 1.3rem;font-size:1.06rem;}
+  label{display:block;font-family:var(--display);font-size:1.28rem;margin:0 0 .15rem;color:var(--ink);}
+  .hint{font-size:.95rem;color:var(--ink-faint);margin-bottom:.6rem;}
+  .field{margin-top:1.7rem;}
+  textarea,input[type=text]{width:100%;font-family:var(--body);font-size:1.08rem;color:var(--ink);background:rgba(241,235,220,.05);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;line-height:1.55;resize:vertical;}
+  textarea::placeholder,input::placeholder{color:var(--ink-faint);}
+  textarea:focus,input:focus{outline:none;border-color:var(--pluto-soft);background:rgba(241,235,220,.09);}
+  textarea{min-height:110px;}
+  .card{background:var(--bg-card);border:1px solid var(--line-soft);border-radius:22px;padding:1.5rem 1.45rem;box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 22px 50px -34px rgba(0,0,0,.8);}
+
+  /* Ramp */
+  .ramp{display:flex;align-items:flex-end;justify-content:space-between;gap:.4rem;margin:1.4rem 0 .5rem;}
+  .dot-btn{background:none;border:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.5rem;flex:1;transition:transform .15s;}
+  .dot-btn:hover{transform:translateY(-2px);}
+  .dot-btn:active{transform:translateY(0) scale(.95);}
+  .dot-btn .dot{border-radius:50%;transition:all .55s cubic-bezier(.2,.7,.2,1),transform .15s;}
+  .dot-btn .lvl{font-family:var(--display);font-size:.86rem;transition:color .4s;}
+  /* non-interactive node (arc header) */
+  .node{display:flex;flex-direction:column;align-items:center;gap:.5rem;flex:1;}
+  .node .dot{border-radius:50%;transition:all .55s cubic-bezier(.2,.7,.2,1);}
+  .node .lvl{font-family:var(--display);font-size:.86rem;}
+
+  .compound{font-size:.95rem;color:var(--ink-faint);font-style:italic;text-align:center;}
+  .now{font-family:var(--display);font-size:3.2rem;line-height:1;color:var(--pluto);font-weight:400;}
+  .now small{font-size:1.1rem;color:var(--ink-soft);}
+  .author{font-size:.95rem;color:var(--ink-faint);margin-top:1rem;font-style:italic;}
+
+  /* Jupiter card */
+  .jupiter-card{
+    position:relative;overflow:hidden;
+    background:var(--jupiter-bg);
+    border:1px solid rgba(226,180,92,.2);
+    border-radius:22px;
+    padding:1.3rem 1.45rem;
+    margin-top:1.2rem;
+    box-shadow:0 1px 0 rgba(226,180,92,.06) inset,0 18px 40px -28px rgba(0,0,0,.7);
+  }
+  .jupiter-card::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 55% at 50% 0%,rgba(226,180,92,.1) 0%,rgba(226,180,92,0) 100%);pointer-events:none;}
+  .jupiter-eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--jupiter-soft);font-weight:500;margin-bottom:.55rem;}
+  .jupiter-theme{font-family:var(--display);font-size:1.22rem;color:var(--jupiter);line-height:1.42;font-style:italic;}
+  .jupiter-sub{font-size:.96rem;color:var(--ink-faint);margin-top:.5rem;line-height:1.55;}
+
+  .compass{margin-top:1.7rem;border-top:1px dashed var(--line);padding-top:1.4rem;}
+  .pill-row{display:flex;gap:.6rem;margin-top:.8rem;}
+  .pill{flex:1;text-align:center;border:1px solid var(--line);border-radius:30px;padding:.6rem;font-size:.98rem;background:transparent;color:var(--ink);transition:all .2s;}
+  .pill:hover{border-color:var(--jupiter-soft);}
+  .pill.sel-flow{background:var(--jupiter);border-color:var(--jupiter);color:#241c08;}
+  .pill.sel-still{background:#4f4838;border-color:#4f4838;color:var(--ink);}
+  .compass-says{margin-top:1rem;font-size:1.04rem;}
+  .compass-says.flow{color:var(--jupiter);} .compass-says.still{color:var(--ink-soft);font-style:italic;}
+  .timeline-note{margin-top:2rem;text-align:center;font-size:.95rem;color:var(--ink-faint);font-style:italic;}
+  .touchstone{margin-top:1.4rem;text-align:center;font-family:var(--display);font-style:italic;font-size:1.18rem;color:var(--ink-soft);line-height:1.4;padding:0 .5rem;}
+  .nav{display:flex;gap:1.4rem;margin-top:2.4rem;align-items:center;}
+  .link{background:none;border:0;font-size:.98rem;color:var(--ink-faint);border-bottom:1px solid transparent;padding:0 0 2px;}
+  .link:hover{color:var(--pluto);border-color:var(--pluto-soft);}
+  .entry{margin:1.2rem 0;padding-bottom:1.2rem;border-bottom:1px solid var(--line-soft);}
+  .entry .meta{font-size:.8rem;letter-spacing:.05em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:.3rem;}
+  .entry .txt{font-size:1.06rem;color:var(--ink);}
+  .proto{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(10,8,5,.92);color:var(--ink);backdrop-filter:blur(6px);border-top:1px solid var(--line-soft);padding:.55rem .8rem calc(.55rem + env(safe-area-inset-bottom));}
+  .proto-in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;}
+  .proto .tag{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-right:.2rem;}
+  .proto button{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:20px;padding:.28rem .7rem;font-size:.82rem;}
+  .proto button.on{background:var(--jupiter);border-color:var(--jupiter);color:#241c08;}
+  .proto .reset{margin-left:.3rem;color:var(--pluto);border-color:var(--pluto-soft);}
+
+  /* Moon + moonlight */
+  #moon-scene{
+    position:fixed;top:0;left:0;right:0;height:100vh;
+    pointer-events:none;z-index:0;overflow:hidden;
+    opacity:0;transition:opacity 2s ease;
+  }
+  #moon-scene.visible{opacity:1;}
+  #moon-scene.visible .moon-disc{
+    animation:moonDescend 30s cubic-bezier(.2,.05,.4,1) forwards,
+              moonFloat 18s ease-in-out 30s infinite;
+  }
+  #moon-scene.visible .moon-halo{
+    animation:haloDescend 30s cubic-bezier(.2,.05,.4,1) forwards,
+              haloBreath 18s ease-in-out 30s infinite;
+  }
+  .moon-disc{
+    position:absolute;
+    width:420px;height:420px;border-radius:50%;
+    top:-380px;left:50%;transform:translateX(-50%);
+    background:radial-gradient(circle at 46% 44%,
+      #ffffff 0%,#fffcf0 12%,#fff8e0 26%,#fff0c0 44%,#f5e098 64%,#e2c878 82%,#ccb060 100%);
+    box-shadow:
+      0 0 0 6px rgba(255,254,234,.55),
+      0 0 50px 25px rgba(255,252,220,.9),
+      0 0 110px 55px rgba(255,248,210,.72),
+      0 0 220px 110px rgba(252,244,205,.52),
+      0 0 380px 170px rgba(250,240,200,.32),
+      0 0 580px 240px rgba(248,236,192,.18),
+      0 0 860px 340px rgba(245,232,185,.09),
+      0 0 1200px 450px rgba(242,228,178,.04);
+  }
+  .moon-crater{
+    position:absolute;border-radius:50%;
+    background:radial-gradient(circle,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 100%);
+  }
+  .moon-shaft{
+    position:absolute;
+    top:0;left:50%;transform:translateX(-50%);
+    width:min(1100px,220vw);height:100vh;
+    /* layered gradients give a soft volumetric glow — no hard edges */
+    background:
+      radial-gradient(ellipse 28% 55% at 50% 0%,
+        rgba(255,254,228,.38) 0%,
+        rgba(253,250,218,.22) 18%,
+        rgba(251,246,210,.10) 38%,
+        transparent 62%),
+      radial-gradient(ellipse 55% 72% at 50% 0%,
+        rgba(255,252,220,.22) 0%,
+        rgba(252,247,210,.12) 22%,
+        rgba(250,244,205,.06) 42%,
+        rgba(248,241,200,.02) 58%,
+        transparent 74%),
+      radial-gradient(ellipse 85% 88% at 50% 0%,
+        rgba(255,250,218,.10) 0%,
+        rgba(252,246,208,.05) 28%,
+        rgba(250,243,204,.02) 48%,
+        transparent 68%),
+      radial-gradient(ellipse 130% 100% at 50% 0%,
+        rgba(255,248,215,.05) 0%,
+        rgba(252,244,206,.02) 30%,
+        transparent 55%);
+  }
+  .moon-halo{
+    position:absolute;
+    width:720px;height:720px;border-radius:50%;
+    top:-360px;left:50%;transform:translateX(-50%);
+    background:radial-gradient(circle,
+      rgba(255,254,238,.28) 0%,
+      rgba(255,252,228,.16) 28%,
+      rgba(252,248,220,.08) 52%,
+      rgba(250,244,215,.03) 68%,
+      transparent 80%);
+  }
+  @keyframes moonDescend{
+    0%  {transform:translateX(-50%) translateY(0);}
+    100%{transform:translateX(-50%) translateY(110px);}
+  }
+  @keyframes haloDescend{
+    0%  {transform:translateX(-50%) translateY(0);}
+    100%{transform:translateX(-50%) translateY(110px);}
+  }
+  @keyframes moonFloat{
+    0%,100%{transform:translateX(-50%) translateY(110px);}
+    50%    {transform:translateX(-50%) translateY(117px);}
+  }
+  @keyframes haloBreath{
+    0%,100%{opacity:.88;transform:translateX(-50%) translateY(110px) scale(1);}
+    50%    {opacity:1;  transform:translateX(-50%) translateY(110px) scale(1.04);}
+  }
+  /* Pluto card hint on threshold */
+  .pluto-hint{
+    margin-top:1.8rem;
+    font-size:1rem;
+    color:rgba(210,154,166,.6);
+    font-style:italic;
+    font-family:var(--display);
+    line-height:1.6;
+    opacity:1;
+  }
+  /* Threshold layout */
+  .threshold-wrap{ padding-top:0; }
+  .threshold-wrap h1{
+    font-size:clamp(3.2rem,10vw,4.8rem);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    margin-bottom:1.8rem;
+  }
+  .threshold-wrap .lede{
+    font-size:1.08rem;
+    margin-top:0;
+    line-height:1.65;
+  }
+  .cursor-spark{
+    display:block;
+    width:2px;height:2.2rem;
+    background:rgba(210,154,166,.4);
+    margin:1.8rem 0 1.4rem;
+    border-radius:2px;
+    animation:cursorPulse 2.8s ease-in-out infinite;
+  }
+  @keyframes cursorPulse{
+    0%,100%{opacity:.3;} 50%{opacity:.85;}
+  }
+  .choose-card-link{
+    background:none;border:none;padding:0;
+    font-family:var(--body);font-size:1.06rem;
+    color:var(--ink-soft);
+    text-align:left;
+    cursor:pointer;
+    border-bottom:1px solid rgba(210,154,166,.3);
+    padding-bottom:1px;
+    line-height:1.55;
+    transition:color .2s,border-color .2s;
+  }
+  .choose-card-link:hover{color:var(--ink);border-color:rgba(210,154,166,.7);}
+  /* Birthday picker */
+  .bday-picker-overlay{
+    position:fixed;inset:0;z-index:25;
+    background:rgba(10,7,4,.94);backdrop-filter:blur(10px);
+    display:none;flex-direction:column;align-items:center;
+    justify-content:center;padding:2rem;
+  }
+  .bday-picker-overlay.open{display:flex;}
+  .bday-box{
+    width:100%;max-width:420px;
+    background:var(--bg-card);border:1px solid var(--line-soft);
+    border-radius:24px;padding:2rem 1.8rem;
+  }
+  .bday-title{
+    font-family:var(--display);font-size:1.35rem;font-weight:400;
+    color:var(--ink);margin-bottom:.35rem;
+  }
+  .bday-subtitle{
+    font-size:.9rem;color:var(--ink-faint);margin-bottom:1.6rem;line-height:1.5;
+  }
+  .bday-selects{display:flex;gap:.8rem;margin-bottom:1.4rem;}
+  .bday-selects select{
+    flex:1;font-family:var(--body);font-size:1rem;
+    color:var(--ink);background:rgba(241,235,220,.06);
+    border:1px solid var(--line);border-radius:12px;
+    padding:.75rem .9rem;appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a2957a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right .8rem center;
+    padding-right:2rem;
+    cursor:pointer;
+  }
+  .bday-selects select:focus{outline:none;border-color:var(--pluto-soft);}
+  .bday-result{
+    background:rgba(210,154,166,.07);border:1px solid rgba(210,154,166,.18);
+    border-radius:16px;padding:1rem 1.1rem;margin-bottom:1.4rem;
+    display:none;
+  }
+  .bday-result.show{display:block;}
+  .bday-card-name{font-family:var(--display);font-size:1.1rem;color:var(--pluto);margin-bottom:.25rem;}
+  .bday-card-calling{font-size:.93rem;color:var(--ink-soft);line-height:1.55;font-style:italic;}
+  .bday-actions{display:flex;gap:.8rem;}
+  .bday-cancel{background:none;border:1px solid var(--line);border-radius:20px;
+    padding:.5rem 1.1rem;color:var(--ink-faint);font-size:.95rem;}
+  .bday-confirm{border-radius:20px;padding:.55rem 1.4rem;font-size:.95rem;}
+
+  /* Inline editing */
+  [contenteditable]{outline:none;border-radius:6px;transition:background .2s;}
+  [contenteditable]:hover{background:rgba(241,235,220,.05);}
+  [contenteditable]:focus{background:rgba(241,235,220,.09);box-shadow:0 0 0 1px var(--line);}
+  [contenteditable]:empty:before{content:attr(data-ph);color:var(--ink-faint);font-style:italic;}
+  .edit-hint{
+    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-faint);opacity:0;transition:opacity .25s;
+    margin-bottom:.3rem;display:block;
+  }
+  [contenteditable]:focus ~ .edit-hint,
+  .edit-zone:hover .edit-hint{ opacity:.6; }
+  /* Jupiter reveal */
+  .jup-reveal-btn{
+    display:inline-block;margin-top:.9rem;
+    background:none;border:none;padding:0;
+    font-family:var(--body);font-size:.88rem;
+    color:var(--jupiter-soft);letter-spacing:.04em;
+    border-bottom:1px solid rgba(226,180,92,.25);
+    padding-bottom:1px;cursor:pointer;
+    transition:color .2s,border-color .2s;
+  }
+  .jup-reveal-btn:hover{color:var(--jupiter);border-color:rgba(226,180,92,.6);}
+  .jup-reveal{
+    margin-top:1rem;overflow:hidden;
+    max-height:0;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s;
+    opacity:0;
+  }
+  .jup-reveal.open{max-height:600px;opacity:1;}
+  .jup-reveal-inner{
+    border-top:1px solid rgba(226,180,92,.15);
+    padding-top:1rem;
+  }
+  .jup-reveal-title{
+    font-family:var(--display);font-size:1.05rem;
+    color:var(--jupiter);margin-bottom:.3rem;
+  }
+  .jup-reveal-body{
+    font-size:.95rem;color:var(--ink-soft);line-height:1.65;
+  }
+  .jup-reveal-cta{
+    margin-top:.8rem;font-size:.85rem;color:var(--ink-faint);font-style:italic;
+  }
+
+  /* Threshold — birth card chosen state */
+  .bday-chosen{
+    display:inline-flex;align-items:center;gap:.7rem;
+    background:rgba(210,154,166,.07);
+    border:1px solid rgba(210,154,166,.18);
+    border-radius:30px;padding:.55rem 1rem .55rem .9rem;
+  }
+  .bday-chosen-label{
+    font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--pluto-soft);
+  }
+  .bday-chosen-name{
+    font-family:var(--display);font-size:1.05rem;color:var(--ink);
+  }
+  .bday-chosen-change{
+    background:none;border:none;font-size:.8rem;color:var(--pluto-soft);
+    border-bottom:1px solid var(--pluto-deep);padding:0 0 1px;cursor:pointer;
+    font-family:var(--body);
+  }
+  .bday-chosen-change:hover{color:var(--pluto);}
+  /* Pluto reveal block */
+  .pluto-reveal{
+    margin-top:1.6rem;
+    padding:1.1rem 1.2rem;
+    background:rgba(210,154,166,.06);
+    border-left:2px solid var(--pluto-deep);
+    border-radius:0 12px 12px 0;
+  }
+  .pluto-reveal-label{
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--pluto-soft);margin-bottom:.4rem;
+  }
+  .pluto-reveal-calling{
+    font-family:var(--display);font-size:1.12rem;font-style:italic;
+    color:var(--ink-soft);line-height:1.55;
+  }
+
+  /* Pluto card — space screen */
+  .pluto-card{
+    position:relative;overflow:hidden;
+    background:rgba(210,154,166,.06);
+    border:1px solid rgba(210,154,166,.18);
+    border-radius:22px;
+    padding:1.3rem 1.45rem;
+    margin-top:1.2rem;
+    box-shadow:0 1px 0 rgba(210,154,166,.04) inset,0 18px 40px -28px rgba(0,0,0,.7);
+  }
+  .pluto-card::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(80% 55% at 50% 0%,rgba(210,154,166,.08) 0%,rgba(210,154,166,0) 100%);
+    pointer-events:none;
+  }
+  .pluto-eyebrow{
+    font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--pluto-soft);font-weight:500;margin-bottom:.55rem;
+  }
+  .pluto-theme{
+    font-family:var(--display);font-size:1.22rem;
+    color:var(--pluto);line-height:1.42;font-style:italic;
+  }
+  .pluto-sub{
+    font-size:.96rem;color:var(--ink-faint);margin-top:.5rem;line-height:1.55;
+  }
+
+  /* Hermes AI reading */
+  .hermes-btn{
+    display:inline-block;margin-top:1.1rem;
+    background:none;border:none;padding:0;
+    font-family:var(--body);font-size:.88rem;
+    color:rgba(210,154,166,.4);letter-spacing:.04em;
+    border-bottom:1px solid rgba(210,154,166,.15);
+    padding-bottom:1px;cursor:pointer;
+    transition:color .25s,border-color .25s;
+  }
+  .hermes-btn:hover{color:var(--pluto);border-color:rgba(210,154,166,.5);}
+  .hermes-reading{
+    margin-top:1.05rem;
+    padding:.85rem 1rem .85rem 1rem;
+    background:rgba(210,154,166,.035);
+    border-top:1px solid rgba(210,154,166,.1);
+    font-size:.97rem;color:var(--ink-soft);
+    line-height:1.68;font-style:italic;
+    position:relative;
+  }
+  .hermes-reading-jup{
+    background:rgba(226,180,92,.025);
+    border-top:1px solid rgba(226,180,92,.1);
+  }
+  .hermes-eyebrow{
+    display:block;
+    font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+    color:rgba(210,154,166,.35);font-style:normal;
+    margin-bottom:.38rem;
+  }
+  .hermes-reading-jup .hermes-eyebrow{color:rgba(226,180,92,.3);}
+  .hermes-regen{
+    position:absolute;top:.65rem;right:.75rem;
+    background:none;border:none;cursor:pointer;
+    font-size:.8rem;color:rgba(210,154,166,.25);
+    line-height:1;transition:color .2s;padding:3px;
+  }
+  .hermes-regen:hover{color:var(--pluto);}
+</style>
+</head>
+<body>
+<div id="moon-scene">
+  <div class="moon-halo"></div>
+  <div class="moon-disc">
+    <div class="moon-crater" style="width:32px;height:32px;top:80px;left:140px;"></div>
+    <div class="moon-crater" style="width:18px;height:18px;top:140px;left:90px;"></div>
+    <div class="moon-crater" style="width:22px;height:22px;top:180px;left:190px;"></div>
+    <div class="moon-crater" style="width:12px;height:12px;top:110px;left:230px;"></div>
+  </div>
+  <div class="moon-shaft"></div>
+</div>
+<!-- Pre-dawn ambient -->
+<div id="amb-setup" style="
+  display:none;position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(55% 38% at 72% 0%, rgba(255,220,80,.22) 0%, rgba(240,190,50,.08) 45%, transparent 70%),
+    radial-gradient(40% 30% at 28% 0%, rgba(255,200,60,.14) 0%, transparent 55%);
+  transition:opacity 2s ease;opacity:0;
+"></div>
+<!-- Space ambient — layered diffuse light, no hard edges -->
+<div id="amb-space" style="
+  display:none;position:fixed;inset:0;pointer-events:none;z-index:0;
+  transition:opacity 2.2s ease;opacity:0;
+">
+  <!-- broad zenith wash — wide and very soft -->
+  <div style="position:absolute;inset:0;
+    background:radial-gradient(ellipse 90% 55% at 44% -8%,
+      rgba(150,210,255,.18) 0%,rgba(110,175,245,.09) 28%,
+      rgba(80,145,230,.04) 50%,transparent 68%);
+  "></div>
+  <!-- secondary bloom — off-axis so it doesn't centre -->
+  <div style="position:absolute;inset:0;
+    background:radial-gradient(ellipse 55% 42% at 72% 5%,
+      rgba(130,185,255,.10) 0%,rgba(100,160,240,.04) 40%,transparent 65%);
+  "></div>
+  <!-- faint deep-violet haze mid-left -->
+  <div style="position:absolute;inset:0;
+    background:radial-gradient(ellipse 50% 60% at -5% 45%,
+      rgba(120,70,200,.07) 0%,rgba(100,50,180,.03) 40%,transparent 62%);
+  "></div>
+  <!-- barely-there scatter bottom — kills the flat base -->
+  <div style="position:absolute;inset:0;
+    background:radial-gradient(ellipse 100% 35% at 50% 105%,
+      rgba(6,14,36,.7) 0%,rgba(6,14,36,.3) 40%,transparent 65%);
+  "></div>
+</div>
+<!-- Sunrise glow -->
+<div id="amb-sunrise" style="
+  display:none;position:fixed;inset:0;pointer-events:none;z-index:0;
+  transition:opacity 2.2s ease;opacity:0;
+">
+  <!-- horizon core -->
+  <div style="
+    position:absolute;bottom:-15%;left:50%;transform:translateX(-50%);
+    width:220%;height:85%;border-radius:50% 50% 0 0;
+    background:radial-gradient(ellipse 55% 100% at 50% 100%,
+      rgba(255,210,60,.62) 0%,rgba(255,150,20,.40) 16%,
+      rgba(230,90,10,.22) 36%,rgba(180,45,10,.08) 55%,transparent 70%);
+  "></div>
+  <!-- golden warmth spread -->
+  <div style="
+    position:absolute;bottom:-8%;left:50%;transform:translateX(-50%);
+    width:130%;height:60%;
+    background:radial-gradient(ellipse 60% 100% at 50% 100%,
+      rgba(255,230,90,.38) 0%,rgba(255,180,40,.20) 28%,
+      rgba(240,130,20,.08) 50%,transparent 68%);
+  "></div>
+  <!-- pink/rose edge light -->
+  <div style="
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    width:180%;height:40%;
+    background:radial-gradient(ellipse 70% 100% at 50% 100%,
+      rgba(255,140,80,.20) 0%,rgba(220,80,40,.10) 35%,transparent 60%);
+  "></div>
+  <!-- faint god-ray left -->
+  <div style="
+    position:absolute;bottom:0;left:25%;width:18%;height:75%;
+    background:linear-gradient(175deg,rgba(255,210,80,.07) 0%,transparent 60%);
+    transform:rotate(-12deg);transform-origin:bottom center;
+  "></div>
+  <!-- faint god-ray right -->
+  <div style="
+    position:absolute;bottom:0;right:20%;width:18%;height:75%;
+    background:linear-gradient(185deg,rgba(255,190,60,.06) 0%,transparent 60%);
+    transform:rotate(12deg);transform-origin:bottom center;
+  "></div>
+</div>
+<div class="wrap" id="app"></div>
+<div class="proto"><div class="proto-in" id="proto"></div></div>
+<script>
+"use strict";
+
+var LEVELS=[5,10,20,40,80];
+
+// Progressive Pluto colors — dim rose → luminous pink
+var RAMP_COLORS=[
+  {bg:"#6b3d47", border:"#7a4854", glow:"none"},
+  {bg:"#8c545f", border:"#9e6370", glow:"none"},
+  {bg:"#b07880", border:"#c48a96", glow:"none"},
+  {bg:"#d29aa6", border:"#d29aa6", glow:"0 0 0 5px rgba(210,154,166,.18),0 0 14px rgba(210,154,166,.25)"},
+  {bg:"#f0bec8", border:"#f0bec8", glow:"0 0 0 7px rgba(240,190,200,.22),0 0 24px rgba(240,190,200,.45)"}
+];
+
+var TOUCHSTONES=[
+ "Pluto is your advocate. The pressure is the universe loosening an old cycle.",
+ "Jupiter is your unearned support. You are already resourced for this path.",
+ "The right people and patterns are quietly finding you.",
+ "This is your expression — your particular flavour of service.",
+ "Meaningful over comfortable. The discomfort is where the evolution lives."
+];
+var CODE_LINES=[
+ "Notice what’s growing — that’s your code showing itself.",
+ "What compounds reveals a little more of who you already are.",
+ "You were already there. It just compounds."
+];
+var DEFAULT={
+ started:false,
+ change:"Let my creative work be seen before it feels finished.",
+ horizon:"Offering my work openly and often, without armour.",
+ jupiter:"People who feel the sincerity, not the polish.",
+ jupiterCard:"", plutoCard:"", jupiterCode:"", plutoCode:"", hermesPluto:"", hermesJupiter:"", birthCard:"", birthCardName:"", spaceLede:"Arrive as honestly — and as playfully — as you like. Nothing here is owed. The Universe wants to be fulfilled through your fulfillment. You’re invited each week to consciously choose to compound your step. Let time reveal to you it’s magic by devoting 90 days.", spaceWhere:"You’re always ready somewhere — what if nothing in life was a test? But a growing curiosity becoming real? Where are you already leaning, even a little? Check in each day and celebrate your momentum.",
+ level:0, mode:"open", compass:null, draft:"", log:[]
+};
+var S=JSON.parse(JSON.stringify(DEFAULT));
+var STORE_KEY="creative-companion-v2";
+var hasStore=(typeof window!=="undefined"&&window.storage&&typeof window.storage.get==="function");
+function save(){ if(!hasStore)return; try{window.storage.set(STORE_KEY,JSON.stringify(S),false);}catch(e){} }
+async function load(){ if(!hasStore)return; try{var r=await window.storage.get(STORE_KEY,false); if(r&&r.value){Object.assign(S,JSON.parse(r.value));}}catch(e){} }
+
+function el(h){var t=document.createElement("template");t.innerHTML=h.trim();return t.content.firstChild;}
+function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function truncate(s,n){s=s||"";return s.length>n?s.slice(0,n-1)+"…":s;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+var app=document.getElementById("app");
+function set(h){app.innerHTML=h;}
+
+function render(){
+  app.className="wrap reveal";
+  var moon=document.getElementById("moon-scene");
+  var ambSetup=document.getElementById("amb-setup");
+  var ambSpace=document.getElementById("amb-space");
+  var ambSun  =document.getElementById("amb-sunrise");
+  function showAmb(el){
+    [ambSetup,ambSpace,ambSun].forEach(function(a){
+      if(!a) return;
+      if(a===el){a.style.display="block";setTimeout(function(){a.style.opacity="1";},20);}
+      else{a.style.opacity="0";setTimeout(function(){a.style.display="none";},2200);}
+    });
+  }
+  if(!S.started){
+    document.body.className="";
+    screenThreshold();
+    if(moon) moon.classList.add("visible");
+    showAmb(null);
+  } else if(S.mode==="setup"){
+    document.body.className="screen-setup";
+    if(moon) moon.classList.remove("visible");
+    screenSetup();
+    showAmb(ambSetup);
+  } else if(S.mode==="arc"){
+    document.body.className="screen-arc";
+    if(moon) moon.classList.remove("visible");
+    screenArc();
+    showAmb(ambSun);
+  } else {
+    document.body.className="screen-space";
+    if(moon) moon.classList.remove("visible");
+    screenSpace();
+    showAmb(ambSpace);
+  }
+  renderProto();
+  app.style.animation="none"; void app.offsetWidth;
+}
+
+function screenThreshold(){
+  var plutoTitle=S.plutoCode&&(typeof CARDS!=='undefined')&&CARDS[S.plutoCode]?CARDS[S.plutoCode].t:'';
+  var plutoCalling=S.plutoCard||'';
+  var plutoBlock=plutoCalling
+    ? '<div class="pluto-reveal">'+
+        (plutoTitle?'<div class="pluto-reveal-label">Your Pluto — '+esc(plutoTitle)+'</div>':'')+'<div class="pluto-reveal-calling">'+esc(plutoCalling)+'</div>'+
+      '</div>'
+    : '';
+  var hasCard=!!(S.birthCard);
+  var chooseEl=hasCard
+    ? '<div class="bday-chosen">'+
+        '<span class="bday-chosen-label">birth card</span>'+
+        '<span class="bday-chosen-name">'+esc(S.birthCardName||S.birthCard)+'</span>'+
+        '<button class="bday-chosen-change" id="choose-card">change</button>'+
+      '</div>'
+    : '<button class="choose-card-link" id="choose-card">Choose your birthday  →</button>';
+  set(
+   '<div class="threshold-wrap">'+
+   '<h1>A 90-Day<br>Creative Companion</h1>'+
+   '<p class="lede">Your invitation to step forward. You’re already honest. Listen to your curiosity. Lean toward one change at your own pace.</p>'+
+   '<p class="lede soft" style="margin-top:1rem;">Your <em>Pluto</em> asks where to lean. Your <em>Jupiter</em> is your support. And how you live your chart is yours — you always have creative say.</p>'+
+   '<div style="margin-top:2rem">'+chooseEl+'</div>'+
+   plutoBlock+
+   '<div style="margin-top:2.6rem"><button class="btn" id="go">Step in</button></div>'+
+   '</div>'
+  );
+  document.getElementById("go").onclick=function(){S.started=true;S.mode="setup";save();render();};
+  document.getElementById("choose-card").onclick=function(){ openBdayPicker(); };
+}
+
+function screenSetup(){
+  set(
+   '<p class="eyebrow">Yours to rewrite — anytime</p>'+
+   '<h2>What are you curious about living?</h2>'+
+   '<div class="field"><label>The change you’re drawn to</label>'+
+     '<div class="hint">Drawn from your Pluto. Say it however it’s true for you.</div>'+
+     '<input type="text" id="f-change" value="'+esc(S.change)+'"></div>'+
+   '<div class="field"><label>And if you lived it fully?</label>'+
+     '<div class="hint">Not a target — a horizon, so the small steps know which way they face.</div>'+
+     '<input type="text" id="f-horizon" value="'+esc(S.horizon)+'"></div>'+
+   '<div class="field"><label>What does Jupiter’s support feel like when it’s working?</label>'+
+     '<div class="hint">One line — shows as a quiet reminder in your space.</div>'+
+     '<textarea id="f-jcard" rows="2" style="resize:none;min-height:0;overflow:hidden;" placeholder="e.g. Visible work draws the right people.">'+esc(S.jupiterCard)+'</textarea></div>'+
+   '<div style="margin-top:2.1rem;display:flex;align-items:center;gap:1.2rem">'+
+   '<button class="btn btn-pluto" id="enter">Enter the space</button>'+
+   '<button class="link" id="back-setup" style="font-size:.95rem;color:var(--ink-faint);">← back</button>'+
+   '</div>'
+  );
+  document.getElementById("enter").onclick=function(){
+    S.change=document.getElementById("f-change").value.trim()||S.change;
+    S.horizon=document.getElementById("f-horizon").value.trim()||S.horizon;
+    S.jupiterCard=document.getElementById("f-jcard").value.trim();
+    S.started=true;S.mode="open";save();render();
+  };
+  var bk=document.getElementById("back-setup");
+  if(bk) bk.onclick=function(){
+    if(S.started){S.mode="open";}else{S.started=false;}
+    render();
+  };
+}
+
+// interactive=true → clickable dot buttons; false → static nodes
+function rampHTML(interactive){
+  var h='<div class="ramp">';
+  for(var i=0;i<LEVELS.length;i++){
+    var isPast=i<S.level, isLit=i===S.level, isFuture=i>S.level;
+    var size=12+i*5;
+    var c=RAMP_COLORS[i];
+    var dotStyle, lvlColor;
+    if(isFuture){
+      dotStyle="width:"+size+"px;height:"+size+"px;background:var(--dot-empty);border:1px solid var(--line);";
+      lvlColor="var(--ink-faint)";
+    } else if(isLit){
+      dotStyle="width:"+size+"px;height:"+size+"px;background:"+c.bg+";border:1px solid "+c.border+";"+(c.glow!=="none"?"box-shadow:"+c.glow+";":"");
+      lvlColor=i>=3?"var(--pluto)":"var(--ink-soft)";
+    } else {
+      dotStyle="width:"+size+"px;height:"+size+"px;background:"+c.bg+";border:1px solid "+c.border+";";
+      lvlColor=i>=3?"var(--ink-soft)":"var(--ink-faint)";
+    }
+    if(interactive){
+      h+='<button class="dot-btn" data-lvl="'+i+'" title="Jump to '+LEVELS[i]+'%">'
+        +'<div class="dot" style="'+dotStyle+'"></div>'
+        +'<div class="lvl" style="color:'+lvlColor+'">'+LEVELS[i]+'%</div>'
+        +'</button>';
+    } else {
+      h+='<div class="node">'
+        +'<div class="dot" style="'+dotStyle+'"></div>'
+        +'<div class="lvl" style="color:'+lvlColor+'">'+LEVELS[i]+'%</div>'
+        +'</div>';
+    }
+  }
+  return h+'</div>';
+}
+
+function bindRampDots(onClickFn){
+  document.querySelectorAll(".dot-btn").forEach(function(btn){
+    btn.onclick=function(){ onClickFn(parseInt(btn.getAttribute("data-lvl"),10)); };
+  });
+}
+
+function screenSpace(){
+  var lvl=LEVELS[S.level];
+  var next=S.level<LEVELS.length-1?LEVELS[S.level+1]:null;
+  var ts=TOUCHSTONES[S.level%TOUCHSTONES.length];
+  var jupCard=S.jupiterCard||S.jupiter;
+
+  var body=
+   '<p class="eyebrow"><button class="link" id="back-space" style="color:var(--ink-faint);font-size:.82rem;margin-right:.8rem;">←</button>'+esc(truncate(S.change,40))+'<button class="edit" id="edit">edit</button></p>'+
+   '<p class="lede" id="lede-ce" contenteditable="true" spellcheck="false" data-ph="Your lede..." style="margin-top:.7rem;padding:.2rem .3rem;border-radius:6px;">'+esc(S.spaceLede)+'</p>'+
+
+   // Progress card
+   '<div class="card" style="margin-top:1.5rem">'+
+     '<div class="faint" style="font-size:.95rem">Right now you’re living this at</div>'+
+     '<div class="now">'+lvl+'<small>%</small></div>'+
+     rampHTML(true)+
+     '<div class="compound">Each small step compounds the last. (Reset at weeks end and begin again)</div>'+
+   '</div>'+
+
+
+
+   // Pluto card
+   (function(){
+     var pc=(typeof CARDS!=='undefined'&&S.plutoCode)?CARDS[S.plutoCode]:null;
+     var calling=S.plutoCard||(pc?pc.c:'');
+     if(!calling) return '';
+     var title=pc?pc.t:'';
+     var body=pc?pc.b:'';
+     var hpr=S.hermesPluto;
+     var hermesHtml=hpr
+       ? '<div class="hermes-reading" id="hermes-pluto-read"><span class="hermes-eyebrow">Hermes</span>'+esc(hpr)+'<button class="hermes-regen" id="hermes-regen" title="New reading">↻</button></div>'
+       : (S.plutoCode?'<button class="hermes-btn" id="hermes-ask">Ask Lazaro ↓</button>':'');
+     var revealBtn=body?'<button class="jup-reveal-btn" id="plu-reveal-btn" style="margin-top:.85rem;">What this asks of you ↓</button>'+
+       '<div class="jup-reveal" id="plu-reveal">'+
+         '<div class="jup-reveal-inner" style="border-color:rgba(210,154,166,.18);">'+
+           '<div class="jup-reveal-body">'+esc(body)+(body.length>=400?'...':'')+'</div>'+
+         '</div>'+
+       '</div>':'';
+     return '<div class="pluto-card">'+
+       '<div class="pluto-eyebrow">Your Pluto'+(title?' — '+esc(title):'')+' </div>'+
+       '<div class="pluto-theme">'+esc(calling)+'</div>'+
+       '<div class="pluto-sub">This is the edge. The place your chart is asking you to walk toward.</div>'+
+       revealBtn+
+       hermesHtml+
+     '</div>';
+   })()+
+
+   '<div style="margin-top:2rem">'+
+     '<h2>Where are you ready?</h2>'+
+     '<p class="lede soft" id="where-ce" contenteditable="true" spellcheck="false" data-ph="Where are you leaning..." style="font-size:1.1rem;padding:.2rem .3rem;border-radius:6px;">'+esc(S.spaceWhere)+'</p>'+
+     '<div class="field" style="margin-top:1.1rem">'+
+       '<label style="font-size:1.05rem">Say it your way</label>'+
+       '<textarea id="draft" placeholder="Where I’m already reaching...">'+esc(S.draft)+'</textarea>'+
+       '<div style="margin-top:.8rem"><button class="btn-ghost" id="keep">Keep this</button></div>'+
+     '</div>'+
+   '</div>'+
+   // Jupiter card
+   '<div class="jupiter-card">'+
+     '<div class="jupiter-eyebrow">Your Jupiter is active'+(S.jupiterCode&&(typeof CARDS!=="undefined")&&CARDS[S.jupiterCode]?' — '+esc(CARDS[S.jupiterCode].t):'')+' </div>'+
+     '<div class="jupiter-theme">'+esc(jupCard)+'</div>'+
+     '<div class="jupiter-sub">This is the current that carries you. Let the Pluto work happen inside it.</div>'+
+     (S.hermesJupiter?'<div class="hermes-reading hermes-reading-jup"><span class="hermes-eyebrow">Hermes</span>'+esc(S.hermesJupiter)+'</div>':'')+
+     '<button class="jup-reveal-btn" id="jup-reveal-btn">See the full card ↓</button>'+
+     '<div class="jup-reveal" id="jup-reveal">'+
+       '<div class="jup-reveal-inner">'+
+         (function(){
+           var cd=(typeof CARDS!=="undefined"&&S.jupiterCode)?CARDS[S.jupiterCode]:null;
+           if(cd) return '<div class="jup-reveal-title">'+esc(cd.t)+'</div>'+
+             '<div class="jup-reveal-body">'+esc(cd.b)+(cd.b.length>=400?"...":"")+"</div>";
+           return "<div class='jup-reveal-body'>Your Jupiter card description will appear here once you choose your card in setup.</div>";
+         })()+'<div class="jup-reveal-cta">Open your Life Chart to explore the full reading.</div>'+
+       '</div>'+
+     '</div>'+
+   '</div>'+
+
+
+
+   '<div class="touchstone">“'+ts+'”</div>'+
+   '<div class="timeline-note">Time is always passing — this is just how you’re spending it.</div>'+
+   '<div style="text-align:center;margin-top:2.4rem"><button class="link" id="toarc" style="color:var(--ink-faint);font-size:1rem;">How I’ve passed my time &nbsp;&rsaquo;&rsaquo;&rsaquo;</button></div>';
+
+  set(body);
+
+  var b;
+  if((b=document.getElementById("edit"))) b.onclick=function(){S.mode="setup";render();};
+  if((b=document.getElementById("back-space"))) b.onclick=function(){S.started=false;render();};
+
+  if((b=document.getElementById("keep"))) b.onclick=function(){
+    var txt=(S.draft||"").trim(); if(!txt){flash("Nothing to keep yet.");return;}
+    S.log.unshift({level:LEVELS[S.level],text:txt,date:new Date().toLocaleDateString(undefined,{month:"short",day:"numeric"})});
+    S.draft="";save();flash("Tended.");
+  };
+
+  if((b=document.getElementById("toarc"))) b.onclick=function(){S.mode="arc";render();};
+  var dd=document.getElementById("draft"); if(dd){dd.oninput=function(){S.draft=dd.value;save();};}
+
+  // Inline editable fields
+  var ledeEl=document.getElementById("lede-ce");
+  if(ledeEl) ledeEl.addEventListener("blur",function(){
+    S.spaceLede=ledeEl.innerText||ledeEl.textContent||"";
+    save();
+  });
+  var whereEl=document.getElementById("where-ce");
+  if(whereEl) whereEl.addEventListener("blur",function(){
+    S.spaceWhere=whereEl.innerText||whereEl.textContent||"";
+    save();
+  });
+
+  // Jupiter reveal toggle
+  var jrBtn=document.getElementById("jup-reveal-btn");
+  var jrPanel=document.getElementById("jup-reveal");
+  if(jrBtn&&jrPanel){
+    var jrOpen=false;
+    jrBtn.onclick=function(){
+      jrOpen=!jrOpen;
+      jrPanel.classList.toggle("open",jrOpen);
+      jrBtn.textContent=jrOpen?"Hide card ↑":"See the full card ↓";
+    };
+  }
+  // Pluto reveal toggle
+  var prBtn=document.getElementById("plu-reveal-btn");
+  var prPanel=document.getElementById("plu-reveal");
+  if(prBtn&&prPanel){
+    var prOpen=false;
+    prBtn.onclick=function(){
+      prOpen=!prOpen;
+      prPanel.classList.toggle("open",prOpen);
+      prBtn.textContent=prOpen?"Less ↑":"What this asks of you ↓";
+    };
+  }
+
+  // Hermes reading
+  (function(){
+    function callHermes(){
+      var pc2=(typeof CARDS!=='undefined'&&S.plutoCode)?CARDS[S.plutoCode]:null;
+      var jc2=(typeof CARDS!=='undefined'&&S.jupiterCode)?CARDS[S.jupiterCode]:null;
+      if(!pc2||!jc2){flash('Choose your birthday first.');return;}
+      var btn2=document.getElementById('hermes-ask')||document.getElementById('hermes-regen');
+      if(btn2){btn2.textContent='reading…';btn2.disabled=true;}
+
+      function withKey(key){
+        Promise.all([
+          callAnthropicDirect(key,'pluto',pc2.t,pc2.b),
+          callAnthropicDirect(key,'jupiter',jc2.t,jc2.b)
+        ]).then(function(r){
+          S.hermesPluto=r[0]||'';
+          S.hermesJupiter=r[1]||'';
+          save();render();
+        }).catch(function(){
+          flash('Lazaro couldn’t connect. Check your API key.');
+          if(btn2){btn2.textContent='Ask Lazaro ↓';btn2.disabled=false;}
+        });
+      }
+
+      // Try local server first, fall back to direct API
+      fetch('/hermes',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({plutoTitle:pc2.t,plutoBody:pc2.b,jupiterTitle:jc2.t,jupiterBody:jc2.b})
+      }).then(function(r){return r.json();})
+      .then(function(d){
+        S.hermesPluto=d.pluto||'';
+        S.hermesJupiter=d.jupiter||'';
+        save();render();
+      }).catch(function(){
+        var key=getStoredKey();
+        if(!key){
+          if(btn2){btn2.textContent='Ask Lazaro ↓';btn2.disabled=false;}
+          openKeyPrompt(function(k){ callHermes(); });
+        } else {
+          withKey(key);
+        }
+      });
+    }
+    var ha=document.getElementById('hermes-ask');
+    if(ha) ha.onclick=callHermes;
+    var hr=document.getElementById('hermes-regen');
+    if(hr) hr.onclick=function(){S.hermesPluto='';S.hermesJupiter='';save();callHermes();};
+  })();
+
+  bindRampDots(function(i){
+    if(i===S.level) return;
+    var msg=i>S.level ? pick(CODE_LINES) : "Stepping back to tend the roots.";
+    S.level=i; S.compass=null; save();
+    flash(msg);
+  });
+}
+
+function screenArc(){
+  var body=
+   '<p class="eyebrow">always passing · never counting down</p>'+
+   '<h2>How I’ve passed my time</h2>'+
+   '<p class="lede soft" style="font-size:1.1rem">No clock here — just what you’ve tended. Every small step compounds, and what grows (or stays) reveals a little more of your code.</p>'+
+   '<div class="card" style="margin-top:1.5rem">'+rampHTML(true)+'<div class="compound">Celebrate Your Momentum</div></div>';
+  if(!S.log.length){
+    body+='<p class="lede soft" style="margin-top:1.6rem">Nothing tended yet. Lean in, keep a reflection, and it’ll start to compound here.</p>';
+  } else {
+    body+='<div style="margin-top:1.8rem">';
+    for(var i=0;i<S.log.length;i++){var e=S.log[i];
+      body+='<div class="entry"><div class="meta">'+esc(e.date)+' · at '+e.level+'%</div><div class="txt">'+esc(e.text)+'</div></div>';}
+    body+='</div>';
+  }
+  body+='<div class="nav"><button class="link" id="back">← back to the space</button></div>';
+  set(body);
+  document.getElementById("back").onclick=function(){S.mode="open";render();};
+
+  bindRampDots(function(i){
+    S.level=i; S.mode="open"; S.compass=null; save(); render();
+  });
+}
+
+function flash(msg){
+  render();
+  var n=el('<div style="position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:9;background:var(--ink);color:var(--bg);font-family:var(--body);font-size:.98rem;padding:.6rem 1.1rem;border-radius:30px;box-shadow:0 14px 30px -16px rgba(0,0,0,.7);opacity:0;transition:opacity .3s;max-width:90%;text-align:center;">'+esc(msg)+'</div>');
+  document.body.appendChild(n);
+  requestAnimationFrame(function(){n.style.opacity="1";});
+  setTimeout(function(){n.style.opacity="0";setTimeout(function(){n.remove();},350);},2300);
+}
+
+function renderProto(){
+  var p=document.getElementById("proto");
+  var h='<span class="tag">prototype · feel each level</span>';
+  for(var i=0;i<LEVELS.length;i++) h+='<button data-i="'+i+'" class="'+(i===S.level&&S.started?"on":"")+'">'+LEVELS[i]+'%</button>';
+  h+='<button class="reset" id="p-reset">reset</button>';
+  h+='<button class="reset" id="p-edit" style="margin-left:.5rem;color:var(--jupiter);">'+(document.designMode==="on"?"✒ editing":"✒ edit text")+'</button>';
+  p.innerHTML=h;
+  p.querySelectorAll("button[data-i]").forEach(function(b){b.onclick=function(){
+    S.started=true;S.level=parseInt(b.getAttribute("data-i"),10);S.mode="open";S.compass=null;save();render();
+  };});
+  document.getElementById("p-reset").onclick=function(){S=JSON.parse(JSON.stringify(DEFAULT));save();render();};
+  document.getElementById("p-edit").onclick=function(){
+    document.designMode=document.designMode==="on"?"off":"on";
+    renderProto();
+  };
+}
+
+(async function(){await load();render();})();
+
+
+var CARDS = {"2c": {"t": "2 of Clubs", "c": "If you are a Two of Clubs, you were born with a mind that understands consequence.", "b": "If you are a Two of Clubs, you were born with a mind that understands consequence. This is not a light, carefree mental energy. This is the mind that sees both sides, anticipates outcomes, tracks ripple effects, and quietly asks, “If I choose this… what might it cost?” Of all the Twos, yours carries one of the deepest senses of responsibility. You are not naïve about choice. You understand that every decision shapes "}, "2d": {"t": "2 of Diamonds", "c": "If you are a 2 of Diamonds, you are wired for connection in the physical world—partnership, collaboration, shared vision, mutual gain.", "b": "If you are a 2 of Diamonds, you are wired for connection in the physical world—partnership, collaboration, shared vision, mutual gain. You're not someone who only wants to \"do your thing\" alone. You want to build with people. You love the strategy of a deal, the choreography of an exchange, the moment when two energies meet and something becomes possible that could not have happened in isolation. You often have a nat"}, "2h": {"t": "2 of Hearts", "c": "To be the Two of Hearts is to be born with an instinct to join.", "b": "To be the Two of Hearts is to be born with an instinct to join. Where the Ace of Hearts can feel like love rising from within the self, the Two of Hearts feels like love reaching outward, searching for the place it belongs. You are not here to live life at arm’s length. You are wired for closeness, for partnership, for the sacred friction and tenderness of relationship—because through relationship, you discover who y"}, "3c": {"t": "3 of Clubs", "c": "If you are a Three of Clubs, you carry a mind that does not merely think — it constructs.", "b": "If you are a Three of Clubs, you carry a mind that does not merely think — it constructs. You see patterns where others see noise. You sense structure inside chaos. Complex systems do not intimidate you; they intrigue you. There is something in you that delights in refinement — in taking what feels scattered and shaping it into something coherent, usable, and elegant. You are a natural architect of ideas. Not just cr"}, "3d": {"t": "3 of Diamonds", "c": "If you are a 3 of Diamonds, you are someone who knows—deep down—how short life is.", "b": "If you are a 3 of Diamonds, you are someone who knows—deep down—how short life is. Not as a concept. As a lived awareness that has brushed up against loss, impermanence, endings, and change enough times that your body remembers it. This awareness can make you feel urgent in ways you don't always explain to others. It can make you feel like you're racing the clock, even when you're smiling. It can make you hungry for "}, "3h": {"t": "3 of Hearts", "c": "To be the Three of Hearts is to carry a heart that is alive—curious, expressive, socially radiant, and hungry for connection in motion.", "b": "To be the Three of Hearts is to carry a heart that is alive—curious, expressive, socially radiant, and hungry for connection in motion. You are not here to love quietly in the corner. You are here to share love. To demonstrate it. To animate it. To walk into a space and make it more human, more playful, more bright—often without even trying.  There is a natural magnetism to this card, as if your presence invites peop"}, "4c": {"t": "4 of Clubs", "c": "If you are a Four of Clubs, your mind is always working – always imagining what comes next.", "b": "If you are a Four of Clubs, your mind is always working – always imagining what comes next. You carry an inner engine that turns ideas into structures, visions into systems, and inspiration into something real enough to hold, share, teach, and build upon. You don’t just imagine what could be — you can see the steps. You can sense the sequence. You can feel the architecture of success as if it’s already laid out in fr"}, "4d": {"t": "4 of Diamonds", "c": "If you are a 4 of Diamonds, you are here to build something that feels bigger than life—and then bring it all the way down into form.", "b": "If you are a 4 of Diamonds, you are here to build something that feels bigger than life—and then bring it all the way down into form. You often carry a kind of dream in your bloodstream: a desire for relationships, connections, and experiences that feel magical, meaningful, and larger than the ordinary. There is something charismatic and compelling about the way you see the world, as if you're always sensing the hidd"}, "4h": {"t": "4 of Hearts", "c": "To be the Four of Hearts is to be born with an inner blueprint of what could be.", "b": "To be the Four of Hearts is to be born with an inner blueprint of what could be. You don’t just look at life and see what is. You look at life and feel what it is trying to become. You can sense the highest version of a relationship, the most beautiful version of a community, the most inspiring version of a business, a program, a movement, a family system. Your heart carries a kind of architectural hope. It doesn’t o"}, "5c": {"t": "5 of Clubs", "c": "If you are a Five of Clubs, you carry a kind of blessing that is not always visible from the outside, but it is unmistakable over time.", "b": "If you are a Five of Clubs, you carry a kind of blessing that is not always visible from the outside, but it is unmistakable over time. There is something about you that moves through the material world with support. When you make a decision and act on it, doors tend to open. Resources tend to appear. The funding, the opportunity, the right connection, the unexpected yes — these things often follow you. This does not"}, "5d": {"t": "5 of Diamonds", "c": "If you are a Five of Diamonds, you experience the physical world intensely.", "b": "If you are a Five of Diamonds, you experience the physical world intensely. You value freedom in a way that feels almost sacred. Movement, change, variety, new experiences—these are not luxuries for you. They feel necessary. You are often willing to try what others hesitate to attempt. You will leap before everyone else has finished thinking. There is boldness in you. There is appetite. There is a desire to taste lif"}, "5h": {"t": "5 of Hearts", "c": "To be the Five of Hearts is to be born as a catalyst for emotional change.", "b": "To be the Five of Hearts is to be born as a catalyst for emotional change. You are not here to simply feel what you feel and call it a day. You are here to move feeling. To loosen what is stuck. To bring the heart back into motion when it has become rigid, guarded, resigned, or afraid. There is a restlessness in this card, but it isn’t random. It is the soul’s way of saying, there is more life in here than we have al"}, "6c": {"t": "6 of Clubs", "c": "If you are the Six of Clubs, you were born with a mind that seeks balance.", "b": "If you are the Six of Clubs, you were born with a mind that seeks balance. You are one of the most naturally discerning cards in the mental realm. You can take in information without immediately drowning in it. You can evaluate details, sense patterns, and understand what is actually happening beneath the surface of a situation. When others feel overwhelmed by data, you begin sorting it. When others are confused, you"}, "6d": {"t": "6 of Diamonds", "c": "If you are a Six of Diamonds, your life often feels like a conversation with value—what matters, what's worth it, what's truly supportive, what is asked of you, and what you are allowed to receive.", "b": "If you are a Six of Diamonds, your life often feels like a conversation with value—what matters, what's worth it, what's truly supportive, what is asked of you, and what you are allowed to receive. There can be seasons where you feel like the luckiest person in the room—where doors open, resources appear, and the physical world seems to respond to you with surprising generosity. And then there can be other seasons wh"}, "6h": {"t": "6 of Hearts", "c": "To be the Six of Hearts is to carry a love that wants to do something with itself.", "b": "To be the Six of Hearts is to carry a love that wants to do something with itself. This is one of the first hearts that doesn’t only wish for a more loving world—it looks at what’s missing and feels a genuine impulse to step forward and participate. You can sense what would help. You can see what would improve. You often have a practical kind of compassion that says, If I can make the environment kinder, safer, stead"}, "7c": {"t": "7 of Clubs", "c": "If you are the Seven of Clubs, you were born with a mind that does not stop at the surface.", "b": "If you are the Seven of Clubs, you were born with a mind that does not stop at the surface. You do not simply want information. You want understanding. The Clubs suit governs thought, language, and learning, and the Seven introduces depth, discernment, and spiritual questioning. Together, they create the seeker-teacher of the deck. You are not satisfied with knowing what works. You want to understand why it works. Yo"}, "7d": {"t": "7 of Diamonds", "c": "If you are a Seven of Diamonds, you often carry a heart that is both tender and ambitious at the same time.", "b": "If you are a Seven of Diamonds, you often carry a heart that is both tender and ambitious at the same time. You want to be loved. Not as a passing feeling, not as a brief moment of attention, but as a deep, steady experience of being cared for and seen for who you truly are. And because your suit is Diamonds, love can easily become tangled with the physical world—compliments, gifts, affection, achievement, beauty, su"}, "7h": {"t": "7 of Hearts", "c": "If you are the Seven of Hearts, you were not born naïve about love.", "b": "If you are the Seven of Hearts, you were not born naïve about love. You were born perceptive. You have the kind of heart that has watched love up close—close enough to notice where people say the right things while living a different truth. Close enough to recognize the subtle ways devotion can become manipulation. Close enough to feel how quickly someone’s tenderness can disappear when their comfort is threatened. B"}, "8c": {"t": "8 of Clubs", "c": "If you are an Eight of Clubs, devotion is built into your bones.", "b": "If you are an Eight of Clubs, devotion is built into your bones. You do not approach life halfway. When you choose a path, you stay with it. When you commit to a project, you see it through. When you believe in something, you give it your mind, your time, and your loyalty. There is an extraordinary steadiness in you that others depend on. You are reliable. You are resilient. You are someone who can sustain momentum l"}, "8d": {"t": "8 of Diamonds — Your Birth Card", "c": "If you are an Eight of Diamonds, you are designed to generate prosperity.", "b": "If you are an Eight of Diamonds, you are designed to generate prosperity. Not as a vague hope, not as a someday prayer, but as a lived capacity. You can see momentum. You can see the steps. You can look at a plan and feel almost unbothered by the amount of work it requires, because something in you understands how creation happens in the physical realm — one step after another, one choice after another, one act of de"}, "8h": {"t": "8 of Hearts", "c": "To be the Eight of Hearts is to live with a very particular kind of devotion.", "b": "To be the Eight of Hearts is to live with a very particular kind of devotion. You are not only sensitive. You are not only loving. You are steady. There is a momentum in you that knows how to show up, day after day, and keep building something meaningful—especially when other people lose heart, lose focus, or lose faith. You can hold a vision for community. You can feel what it would mean for a family, an organizatio"}, "9c": {"t": "9 of Clubs", "c": "If you are a Nine of Clubs, you carry a mind that is always nearing completion… and yet rarely feels complete.", "b": "If you are a Nine of Clubs, you carry a mind that is always nearing completion… and yet rarely feels complete. You are here to fulfill ideas. To bring mental chapters to their end. To turn learning into mastery. And when you are aligned, you are capable of becoming an expert — not in the shallow sense of knowing facts, but in the deeper sense of living inside a subject long enough that it becomes part of you. But the"}, "9d": {"t": "9 of Diamonds", "c": "If you are a Nine of Diamonds, you tend to live with a quiet intensity that other people can feel, even when you don't speak about it.", "b": "If you are a Nine of Diamonds, you tend to live with a quiet intensity that other people can feel, even when you don't speak about it. Your standards are high—not because you're trying to impress anyone, but because something in you is devoted to an idea of perfection. You want to know the highest possibility in any situation. You want to choose what is most aligned. You want to live with integrity that doesn't wobbl"}, "9h": {"t": "9 of Hearts", "c": "To be the Nine of Hearts is to carry the ache and the promise of fulfillment in the same breath.", "b": "To be the Nine of Hearts is to carry the ache and the promise of fulfillment in the same breath. You are not indifferent to love. You are not casual about connection. You feel responsible for it. Responsible for the emotional temperature of a room. Responsible for whether people feel cared for. Responsible for whether harmony is restored. There is something in you that wants to experience love at the highest scale—to"}, "2s": {"t": "2 of Spades", "c": "If you are a 2 of Spades, you carry an extraordinary capacity to read the room.", "b": "If you are a 2 of Spades, you carry an extraordinary capacity to read the room. Not just intellectually. Not just socially. But energetically. You walk into a space and something in you immediately begins processing — who feels safe, who feels unsettled, what is unspoken, where the tension lives, what the group needs. It happens fast. Often before you even consciously register it. This ability was not random. For man"}, "3s": {"t": "3 of Spades", "c": "If you are a 3 of Spades, there is a particular kind of pressure you have lived with for as long as you can remember.", "b": "If you are a 3 of Spades, there is a particular kind of pressure you have lived with for as long as you can remember. It isn't only ambition. It isn't only responsibility. It is the feeling that these two currents are braided together inside of you — an inner drive to make something of your life, and an equally strong pull to make that life matter to other people. You are not easily satisfied by success that stays pe"}, "4s": {"t": "4 of Spades", "c": "If you are a 4 of Spades, you are not designed to do your work in isolation.", "b": "If you are a 4 of Spades, you are not designed to do your work in isolation. You love being with people. You love feeling a room come alive. You love celebration, play, the uplift that happens when human beings gather around something meaningful and feel themselves expand inside of it. There is something in you that is nourished by community — not just by being present in it, but by watching it flourish. You notice w"}, "5s": {"t": "5 of Spades — Transformed Self", "c": "If you are a 5 of Spades, life rarely asks you to live in only one lane.", "b": "If you are a 5 of Spades, life rarely asks you to live in only one lane. You are the kind of healer, coach, or leader who feels deeply responsible for people, and at the same time driven by ambition — not because you're \"attached to success,\" but because something in you is genuinely motivated to build, achieve, and leave a mark. It can feel like you were born with two sacred callings that don't always seem to fit in"}, "6s": {"t": "6 of Spades", "c": "If you are a 6 of Spades, your chart carries a kind of \"on paper\" strength that other people often admire from the outside.", "b": "If you are a 6 of Spades, your chart carries a kind of \"on paper\" strength that other people often admire from the outside. You tend to have the capacity to build a life that looks stable, capable, successful — sometimes even enviable. When you apply yourself, you can generate real results. You can create comfort. You can create prosperity. You can create a life that feels, at least externally, like it should be sati"}, "7s": {"t": "7 of Spades", "c": "If you are a 7 of Spades, you were born with a doorway open inside you.", "b": "If you are a 7 of Spades, you were born with a doorway open inside you. In your early years especially, you may have lived more in imagination than in the world around you. Not because you were avoiding life in a lazy way, but because your inner world was so alive it could feel more real than what was happening in front of you. You contemplated. You daydreamed. You wandered into possibility. You imagined a kinder wor"}, "8s": {"t": "8 of Spades", "c": "If you are an 8 of Spades, you have likely lived much of your life balancing two forces inside you: what you feel you have to do, and what you genuinely want to do.", "b": "If you are an 8 of Spades, you have likely lived much of your life balancing two forces inside you: what you feel you have to do, and what you genuinely want to do. You can feel obligation in the air — expectations from others, roles you've been given, pressures that seem to quietly follow you. And at the same time, there is a sincere inner drive to build a life that is yours, a life that reflects what you actually c"}, "9s": {"t": "9 of Spades", "c": "If you are a 9 of Spades, you tend to find yourself standing at the edge of extremes.", "b": "If you are a 9 of Spades, you tend to find yourself standing at the edge of extremes. People come into your life when they are at their breaking point. When the burden is heavy. When the addiction is loud. When the despair is real. When the spiritual crisis feels like it might undo them. You attract those who are at the very peak of challenge — or the very brink of breakthrough. And over time, you begin to understand"}, "Ah": {"t": "Ace of Hearts", "c": "To be the Ace of Hearts is to carry love at its source-point.", "b": "To be the Ace of Hearts is to carry love at its source-point. Not love as romance, not love as performance, not love as something you earn or bargain for—but love as an original frequency. The kind that remembers what matters before the world teaches you what to chase. There is often something quietly luminous about you, even when you don’t feel luminous at all.  You can walk into a room and sense what is missing—not"}, "Ad": {"t": "Ace of Diamonds", "c": "If you are an Ace of Diamonds, you carry the energy of beginnings in the physical realm.", "b": "If you are an Ace of Diamonds, you carry the energy of beginnings in the physical realm. You are here to start things that other people only think about. You bring freshness into rooms that have gone stale. You can walk into a situation with very little context and somehow know what to do next—what to adjust, what to improve, what to initiate, what to offer. There is a quiet brilliance to that. Not performative. Prac"}, "Ac": {"t": "Ace of Clubs", "c": "If you are an Ace of Clubs, you were born with a mind that wakes up early.", "b": "If you are an Ace of Clubs, you were born with a mind that wakes up early. You don’t just think—you initiate thought. You bring fresh ideas, new angles, and unexpected solutions into the rooms you walk into, often without even trying. There’s a bright, catalytic quality to you, like you’re here to start things that other people didn’t yet realize were possible. And yet, your chart isn’t only mind. There is heart here"}, "As": {"t": "Ace of Spades", "c": "If you are an Ace of Spades, you were not born into a simple life.", "b": "If you are an Ace of Spades, you were not born into a simple life. You were born into a contemplative one. From a very early age, you have felt what others often avoid — the fragility of life, the reality of loss, the presence of death, the inevitability of change. You may not have had language for it as a child, but you felt it. You sensed that things end. That people leave. That life can shift without warning. And "}, "Jh": {"t": "Jack of Hearts", "c": "To be the Jack of Hearts is to stand at the very center of the emotional kingdom.", "b": "To be the Jack of Hearts is to stand at the very center of the emotional kingdom. This is not a light placement. It carries a gravity that you likely felt long before you had language for it. There is a quiet imprint in this chart that says, If something matters, I will sacrifice for it. If someone is hurting, I will carry some of that pain. If love is needed, I will give it—even if it costs me. This is why this arch"}, "Jd": {"t": "Jack of Diamonds", "c": "If you are a Jack of Diamonds, you are often one of the most magnetic people in the room without even trying.", "b": "If you are a Jack of Diamonds, you are often one of the most magnetic people in the room without even trying. There is a likability to you that feels effortless—playful, animated, enthusiastic, full of spark. People tend to enjoy being around you. They feel uplifted. They feel entertained. They feel your energy and, for a moment, life feels lighter just because you're present. And yet, beneath that easy charm, there "}, "Jc": {"t": "Jack of Clubs", "c": "If you are a Jack of Clubs, you are standing in one of the most delicate transitions in the entire mental suit.", "b": "If you are a Jack of Clubs, you are standing in one of the most delicate transitions in the entire mental suit. You have spent much of your life learning. Observing. Studying. Listening. Gathering insight from mentors, books, systems, conversations, lived experience. You do not approach the world casually. You want to understand it. You want to see how it works beneath the surface. And because of that, you often know"}, "Js": {"t": "Jack of Spades", "c": "If you are a Jack of Spades, you can feel two worlds tugging at you — almost like two different versions of you are trying to steer the same life.", "b": "If you are a Jack of Spades, you can feel two worlds tugging at you — almost like two different versions of you are trying to steer the same life. One part of you wants the tangible things. You want stability. You want your needs met. You want to build a life that works in the physical world — money handled, responsibilities managed, a sense that your daily reality is solid enough to rest inside. And then there is th"}, "Qh": {"t": "Queen of Hearts", "c": "To be the Queen of Hearts is to live with your heart right at the surface of your life.", "b": "To be the Queen of Hearts is to live with your heart right at the surface of your life. You don’t merely feel love—you radiate it. You want people to feel cared for in your presence. You want tenderness to be the atmosphere. You want the people around you to soften, to exhale, to remember they are safe. There is a maternal current in this card, a nurturing force that can hold others in ways they have rarely been held"}, "Qd": {"t": "Queen of Diamonds", "c": "If you are a Queen of Diamonds, your life rarely feels still.", "b": "If you are a Queen of Diamonds, your life rarely feels still. You are positioned in a way that pulls experiences toward you quickly, sometimes so quickly that it can feel like you're living inside a moving river. Opportunities, people, invitations, ideas, paths, and possibilities tend to rotate around you. It's not that you are indecisive by nature. It's that your field is responsive—almost magnetic—and life gives yo"}, "Qc": {"t": "Queen of Clubs", "c": "If you are the Queen of Clubs, you were not designed to simply think about ideas, you were born to bring them to life.", "b": "If you are the Queen of Clubs, you were not designed to simply think about ideas, you were born to bring them to life. The Clubs suit governs thought, communication, and strategy. The Queen embodies maturity, composure, and inner authority. Together, they create someone who does not simply generate ideas — you steward them. You can take inspiration and shape it into something viable, structured, and potentially impac"}, "Qs": {"t": "Queen of Spades", "c": "If you are a Queen of Spades, you have a direct line to wisdom that often surprises even you.", "b": "If you are a Queen of Spades, you have a direct line to wisdom that often surprises even you. You can see what is happening underneath what is happening. You can sense the hidden pattern, the real motive, the deeper truth, the inevitable consequence. Sometimes you understand things you have no logical reason to understand. It simply arrives — clear, immediate, undeniable — like an inner knowing that doesn't require p"}, "Kh": {"t": "King of Hearts", "c": "To be the King of Hearts is to live as a visionary of love.", "b": "To be the King of Hearts is to live as a visionary of love. You can see creative potential as if it’s already real. You can hear someone describe an idea and immediately picture the entire blueprint—how it would look, how it would feel, how it would function, how it would land in the world. It’s almost like breathing for you. Imagination is not a hobby. It is a native language. And because you can see so much, so qui"}, "Kd": {"t": "King of Diamonds", "c": "If you are a King of Diamonds, you were born with a rare mix of tenderness and authority.", "b": "If you are a King of Diamonds, you were born with a rare mix of tenderness and authority. On the surface, the Diamonds suit is the material kingdom: resources, stewardship, prosperity, value, and the structures that make a life sustainable. But as a King, you carry the Diamond realm in its highest expression. You are here to lead in the world of matter. Not as someone who chases money for its own sake, but as someone"}, "Kc": {"t": "King of Clubs", "c": "If you are a King of Clubs, your mind is not just active — it is sovereign.", "b": "If you are a King of Clubs, your mind is not just active — it is sovereign. From a young age, you likely discovered that your thinking operated at a different register than the people around you. Not louder. Not necessarily faster. But wider. You could see connections that others missed, hold multiple frameworks at once, and sense when an idea had not yet been taken to its real conclusion. That capacity is your inher"}, "Ks": {"t": "King of Spades", "c": "If you are a King of Spades, you are not here to think like everyone else.", "b": "If you are a King of Spades, you are not here to think like everyone else. Your mind doesn't simply collect information. It sees. It finds vantage points other people don't even consider. You can look at a situation and sense the hidden architecture beneath it — the pattern underneath the pattern, the direction underneath the chaos, the inevitable consequence that no one else is naming yet. And because you can see th"}, "10h": {"t": "10 of Hearts", "c": "To be the Ten of Hearts is to carry the blueprint of the world you wish existed.", "b": "To be the Ten of Hearts is to carry the blueprint of the world you wish existed. You don’t simply hope for peace—you believe it is the natural operating system of reality. You value love as a structure, not a sentiment. You believe community should feel nourishing. You believe connection should feel safe. You believe fulfillment should be possible, not rare. And somewhere inside you, there is a quiet knowing that hum"}, "10d": {"t": "10 of Diamonds", "c": "If you are a Ten of Diamonds, you carry an energy the world tends to recognize.", "b": "If you are a Ten of Diamonds, you carry an energy the world tends to recognize. People often feel your momentum before they understand your heart. There is a natural prosperity current in you—an ability to align with what you need, and often a little more than you expected. It can look like luck from the outside, but it rarely feels like \"luck\" from the inside. It feels like drive. It feels like appetite. It feels li"}, "10c": {"t": "10 of Clubs", "c": "If you are a Ten of Clubs, you are designed to see from the highest vantage point.", "b": "If you are a Ten of Clubs, you are designed to see from the highest vantage point. You do not simply gather information — you synthesize it. You can look at complexity and extract the core truth. You can observe details and organize them into something meaningful. Where others see fragments, you see patterns. Where others feel overwhelmed, you instinctively search for the higher perspective. This gives you a kind of "}, "10s": {"t": "10 of Spades", "c": "If you are a 10 of Spades, you can feel consequence moving through the world in real time.", "b": "If you are a 10 of Spades, you can feel consequence moving through the world in real time. Not in a paranoid way. Not in a superstitious way. In a deeply sensitive, almost immediate way — like you can sense that the moment you put something into motion, life responds. Cause and effect doesn't feel abstract to you. It feels personal. It feels fast. It feels like the universe is always giving you feedback, sometimes be"}};
+
+// ── Birth card → Pluto/Jupiter spread (from Life Chart) ──────────────────────
+var SPREADS = {"8d": {"pluto": "As", "jupiter": "Qc"}, "2h": {"pluto": "7d", "jupiter": "4c"}, "3h": {"pluto": "7d", "jupiter": "5c"}, "4h": {"pluto": "8d", "jupiter": "6c"}, "5h": {"pluto": "7s", "jupiter": "7c"}, "6h": {"pluto": "10d", "jupiter": "6h"}, "7h": {"pluto": "4c", "jupiter": "9c"}, "8h": {"pluto": "Ac", "jupiter": "10c"}, "9h": {"pluto": "Kc", "jupiter": "Jc"}, "10h": {"pluto": "3s", "jupiter": "10h"}, "2c": {"pluto": "6s", "jupiter": "4d"}, "3c": {"pluto": "7s", "jupiter": "3c"}, "4c": {"pluto": "8s", "jupiter": "6d"}, "5c": {"pluto": "9s", "jupiter": "7d"}, "6c": {"pluto": "10s", "jupiter": "8d"}, "7c": {"pluto": "Jd", "jupiter": "9d"}, "8c": {"pluto": "3s", "jupiter": "10d"}, "9c": {"pluto": "Js", "jupiter": "Kd"}, "10c": {"pluto": "3d", "jupiter": "Ac"}, "2d": {"pluto": "Ah", "jupiter": "4s"}, "3d": {"pluto": "2h", "jupiter": "5s"}, "4d": {"pluto": "4d", "jupiter": "6s"}, "5d": {"pluto": "4h", "jupiter": "7s"}, "6d": {"pluto": "5h", "jupiter": "8s"}, "7d": {"pluto": "6h", "jupiter": "9s"}, "9d": {"pluto": "8h", "jupiter": "9d"}, "10d": {"pluto": "9h", "jupiter": "Qd"}, "2s": {"pluto": "3h", "jupiter": "Qh"}, "3s": {"pluto": "2c", "jupiter": "Qs"}, "4s": {"pluto": "3c", "jupiter": "Ah"}, "5s": {"pluto": "4c", "jupiter": "5s"}, "6s": {"pluto": "10s", "jupiter": "6s"}, "7s": {"pluto": "6c", "jupiter": "4h"}, "8s": {"pluto": "7c", "jupiter": "5h"}, "9s": {"pluto": "8c", "jupiter": "6h"}, "10s": {"pluto": "9c", "jupiter": "7h"}, "Ah": {"pluto": "5d", "jupiter": "3c"}, "Jh": {"pluto": "2d", "jupiter": "Kh"}, "Kh": {"pluto": "4s", "jupiter": "2d"}, "Qh": {"pluto": "5c", "jupiter": "3h"}, "Ac": {"pluto": "5s", "jupiter": "3d"}, "Jc": {"pluto": "8h", "jupiter": "Kc"}, "Kc": {"pluto": "Qh", "jupiter": "2s"}, "Qc": {"pluto": "Jh", "jupiter": "Qc"}, "Ad": {"pluto": "Qs", "jupiter": "3s"}, "Jd": {"pluto": "10c", "jupiter": "8h"}, "Kd": {"pluto": "10d", "jupiter": "Js"}, "Qd": {"pluto": "Jc", "jupiter": "9h"}, "As": {"pluto": "Kh", "jupiter": "Jh"}, "Js": {"pluto": "Ad", "jupiter": "10h"}, "Ks": {"pluto": "7h", "jupiter": "10s"}, "Qs": {"pluto": "4d", "jupiter": "2c"}};
+
+function getSpread(birthCode){
+  return SPREADS[birthCode] || null;
+}
+
+// ── Birthday card lookup (Destiny Card system) ────────────────────────────────
+var BDAY_SEQ = [
+  'Kc','Qc','Jc','10c','9c','8c','7c','6c','5c','4c','3c','2c','Ac',
+  'Kd','Qd','Jd','10d','9d','8d','7d','6d','5d','4d','3d','2d','Ad',
+  'Kh','Qh','Jh','10h','9h','8h','7h','6h','5h','4h','3h','2h','Ah',
+  'Ks','Qs','Js','10s','9s','8s','7s','6s','5s','4s','3s','2s','As',
+  'JOKER'
+];
+var BDAY_MONTH_STARTS = [0,2,4,6,8,10,12,14,16,18,20,22];
+var BDAY_DAYS_IN_MONTH = [31,29,31,30,31,30,31,31,30,31,30,31];
+
+function getBirthCard(month, day){
+  if(!month||!day) return null;
+  var idx = BDAY_MONTH_STARTS[month-1] + day - 1;
+  return BDAY_SEQ[idx] || null;
+}
+
+function cardDisplayName(code){
+  if(!code||code==='JOKER') return 'The Joker';
+  var RANK_NAMES={A:'Ace',K:'King',Q:'Queen',J:'Jack','10':'Ten',
+    '9':'Nine','8':'Eight','7':'Seven','6':'Six','5':'Five','4':'Four','3':'Three','2':'Two'};
+  var SUIT_NAMES={c:'Clubs',d:'Diamonds',h:'Hearts',s:'Spades'};
+  var m=code.match(/^(A|K|Q|J|10|[2-9])([cdhs])$/);
+  if(!m) return code;
+  return (RANK_NAMES[m[1]]||m[1])+' of '+(SUIT_NAMES[m[2]]||m[2]);
+}
+
+function populateDaySelect(month){
+  var sel=document.getElementById('bday-day');
+  if(!sel) return;
+  var days=month?BDAY_DAYS_IN_MONTH[month-1]:31;
+  sel.innerHTML='<option value="">Day</option>';
+  for(var d=1;d<=days;d++){
+    var o=document.createElement('option');
+    o.value=d; o.textContent=d;
+    sel.appendChild(o);
+  }
+}
+
+function updateBdayResult(){
+  var m=parseInt(document.getElementById('bday-month').value)||0;
+  var d=parseInt(document.getElementById('bday-day').value)||0;
+  var result=document.getElementById('bday-result');
+  var nameEl=document.getElementById('bday-card-name');
+  var callingEl=document.getElementById('bday-card-calling');
+  var confirmBtn=document.getElementById('bday-confirm');
+  if(!m||!d){ result.classList.remove('show'); confirmBtn.style.display='none'; return; }
+  var code=getBirthCard(m,d);
+  if(!code||code==='JOKER'){ result.classList.remove('show'); confirmBtn.style.display='none'; return; }
+  var display=cardDisplayName(code);
+  var cardData=typeof CARDS!=='undefined'?CARDS[code]:null;
+  nameEl.textContent=display;
+  callingEl.textContent=cardData?cardData.c:'Look up your Pluto and Jupiter in your Life Chart.';
+  result.classList.add('show');
+  confirmBtn.style.display='inline-block';
+  confirmBtn.setAttribute('data-code',code);
+  confirmBtn.setAttribute('data-name',display);
+}
+
+function openBdayPicker(){
+  var overlay=document.getElementById('bday-picker');
+  if(!overlay) return;
+  populateDaySelect(0);
+  document.getElementById('bday-month').value='';
+  document.getElementById('bday-day').value='';
+  document.getElementById('bday-result').classList.remove('show');
+  document.getElementById('bday-confirm').style.display='none';
+  if(S.birthCard){
+    // Pre-fill if already set — find the month/day isn't stored so just show result
+    document.getElementById('bday-card-name').textContent=S.birthCardName||S.birthCard;
+    var cd=typeof CARDS!=='undefined'?CARDS[S.birthCard]:null;
+    document.getElementById('bday-card-calling').textContent=cd?cd.c:'';
+    document.getElementById('bday-result').classList.add('show');
+  }
+  overlay.classList.add('open');
+}
+
+function closeBdayPicker(){
+  var overlay=document.getElementById('bday-picker');
+  if(overlay) overlay.classList.remove('open');
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var mSel=document.getElementById('bday-month');
+  var dSel=document.getElementById('bday-day');
+  var cancelBtn=document.getElementById('bday-cancel');
+  var confirmBtn=document.getElementById('bday-confirm');
+  if(mSel) mSel.addEventListener('change',function(){
+    populateDaySelect(parseInt(this.value)||0);
+    updateBdayResult();
+  });
+  if(dSel) dSel.addEventListener('change',updateBdayResult);
+  if(cancelBtn) cancelBtn.addEventListener('click',closeBdayPicker);
+  if(confirmBtn) confirmBtn.addEventListener('click',function(){
+    var code=this.getAttribute('data-code');
+    var name=this.getAttribute('data-name');
+    if(code){
+      S.birthCard=code;
+      S.birthCardName=name;
+      var sp=getSpread(code);
+      if(sp){
+        // Auto-populate Pluto
+        if(sp.pluto){
+          var pd=(typeof CARDS!=='undefined')?CARDS[sp.pluto]:null;
+          S.plutoCode=sp.pluto;
+          S.plutoCard=pd?pd.c:'';
+        }
+        // Auto-populate Jupiter
+        if(sp.jupiter){
+          var jd=(typeof CARDS!=='undefined')?CARDS[sp.jupiter]:null;
+          S.jupiterCode=sp.jupiter;
+          S.jupiterCard=jd?jd.c:'';
+          S.jupiter=jd?jd.c:S.jupiter;
+        }
+      }
+      save();
+    }
+    closeBdayPicker();
+    render();
+  });
+});
+
+// ── Lazaro direct API (fallback when companion-server.py not running) ─────────
+var LAZARO_SYSTEM = "You are Lazaro — a quiet interpreter of the Destiny Cards. Speak directly to the person in second person. Two sentences only. No metaphysical jargon. Specific, lived, direct.";
+
+function lazaroPrompt(type, title, body){
+  if(type==="pluto"){
+    return "Pluto card — "+title+":\n"+body+"\n\nIn exactly 2 sentences, name the specific edge this card is asking this person to walk toward — direct and true to this card’s particular quality. Then let the second sentence carry a tender quality: not softening the edge, but offering a gentle sense of where to place the next step, as if someone who deeply believes in them is pointing the way forward.";
+  } else {
+    return "Jupiter card — "+title+":\n"+body+"\n\nIn 2 sentences, describe what this Jupiter card is already drawing toward this person and quietly breathing through them — not as guidance but as a living current they are already inside of. Write it as recognition of what is naturally flowing to them and through them from this card’s essence, without effort or instruction. Poetic, expansive, second person, specific to this card.";
+  }
+}
+
+function getStoredKey(){ try{return localStorage.getItem("lazaro-api-key")||"";}catch(e){return "";} }
+function storeKey(k){ try{localStorage.setItem("lazaro-api-key",k);}catch(e){} }
+
+function callAnthropicDirect(key, type, title, body){
+  return fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "x-api-key":key,
+      "anthropic-version":"2023-06-01",
+      "anthropic-dangerous-direct-browser-access":"true"
+    },
+    body:JSON.stringify({
+      model:"claude-haiku-4-5-20251001",
+      max_tokens:140,
+      system:LAZARO_SYSTEM,
+      messages:[{role:"user",content:lazaroPrompt(type,title,body)}]
+    })
+  }).then(function(r){return r.json();})
+  .then(function(d){return d.content[0].text.trim();});
+}
+
+var _keyCallback=null;
+function openKeyPrompt(cb){
+  _keyCallback=cb;
+  var o=document.getElementById("key-prompt");
+  if(o) o.classList.add("open");
+}
+function closeKeyPrompt(){
+  var o=document.getElementById("key-prompt");
+  if(o) o.classList.remove("open");
+  _keyCallback=null;
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  var ki=document.getElementById("key-input");
+  var kc=document.getElementById("key-confirm");
+  var kx=document.getElementById("key-cancel");
+  if(kx) kx.addEventListener("click",closeKeyPrompt);
+  if(kc) kc.addEventListener("click",function(){
+    var k=(ki?ki.value:"").trim();
+    if(!k) return;
+    storeKey(k);
+    closeKeyPrompt();
+    if(_keyCallback) _keyCallback(k);
+  });
+});
+
+</script>
+<div id="bday-picker" class="bday-picker-overlay">
+  <div class="bday-box">
+    <div class="bday-title">What is your birthday?</div>
+    <div class="bday-subtitle">We’ll look up your birth card from the Destiny Card table, so you can find your Pluto and Jupiter in your Life Chart.</div>
+    <div class="bday-selects">
+      <select id="bday-month">
+        <option value="">Month</option>
+        <option value="1">January</option><option value="2">February</option>
+        <option value="3">March</option><option value="4">April</option>
+        <option value="5">May</option><option value="6">June</option>
+        <option value="7">July</option><option value="8">August</option>
+        <option value="9">September</option><option value="10">October</option>
+        <option value="11">November</option><option value="12">December</option>
+      </select>
+      <select id="bday-day">
+        <option value="">Day</option>
+      </select>
+    </div>
+    <div class="bday-result" id="bday-result">
+      <div class="bday-card-name" id="bday-card-name"></div>
+      <div class="bday-card-calling" id="bday-card-calling"></div>
+    </div>
+    <div class="bday-actions">
+      <button class="bday-cancel" id="bday-cancel">Cancel</button>
+      <button class="btn bday-confirm" id="bday-confirm" style="display:none;">Save my card</button>
+    </div>
+  </div>
+</div>
+<div id="key-prompt" class="bday-picker-overlay">
+  <div class="bday-box">
+    <div class="bday-title">Connect Lazaro</div>
+    <div class="bday-subtitle">Enter your Anthropic API key to enable personalized readings. It stays in your browser only — never sent anywhere except Anthropic.</div>
+    <div class="field" style="margin-top:1rem">
+      <input type="password" id="key-input" placeholder="sk-ant-..." style="margin-top:0">
+    </div>
+    <div class="bday-actions" style="margin-top:1.2rem">
+      <button class="bday-cancel" id="key-cancel">Cancel</button>
+      <button class="btn bday-confirm" id="key-confirm">Connect</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
