@@ -1752,7 +1752,15 @@ export default function App() {
 
   const canSwipeFrom = (target) => {
     if (!target) return true;
-    return !target.closest?.('textarea, input, select, button, a, .wgt-chart-scroll, .pn, .bc-pn');
+    return !target.closest?.('textarea, input, select, button, a, .wgt-chart-scroll, .pn, .bc-pn, .left-widgets, .num-msg.compact');
+  };
+
+  const canScrollInside = (target, deltaY) => {
+    const scroller = target?.closest?.('.left-widgets, .num-msg.compact, .wgt-chart-scroll');
+    if (!scroller) return false;
+    const maxScroll = scroller.scrollHeight - scroller.clientHeight;
+    if (maxScroll <= 1) return false;
+    return deltaY > 0 ? scroller.scrollTop < maxScroll - 1 : scroller.scrollTop > 1;
   };
 
   const startSwipe = (touch, target) => {
@@ -1781,6 +1789,7 @@ export default function App() {
     if (!widgetMode) return;
     const onWheel = e => {
       if (selectedCard) return;
+      if (canScrollInside(e.target, e.deltaY)) return;
       e.preventDefault();
       movePanel(e.deltaY > 0 ? 1 : -1);
     };
