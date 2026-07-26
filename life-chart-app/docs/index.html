@@ -26,6 +26,13 @@
       }
     </style>
     <title>Life Chart App</title>
+    <script>
+      // GitHub Pages serves this source index at /Apps/life-chart-app/.
+      // Send phone/PWA users to the built app in /docs/ while leaving local Vite dev alone.
+      if (location.hostname === 'bryan-gallagher.github.io' && !location.pathname.includes('/docs/')) {
+        location.replace(location.pathname.replace(/\/?(?:index\.html)?$/, '/docs/') + location.search + location.hash);
+      }
+    </script>
     <script type="module" crossorigin src="./assets/index-C42H3rUQ.js"></script>
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
   <body>
