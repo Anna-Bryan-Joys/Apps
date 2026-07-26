@@ -25,7 +25,9 @@ function createWindow() {
     trafficLightPosition: { x: -100, y: 0 },
     backgroundColor: '#04030f',
     alwaysOnTop:     false,
-    resizable:       false,
+    resizable:       true,
+    minWidth:        WIDGET.w,
+    minHeight:       WIDGET.h,
     hasShadow:       true,
     webPreferences: {
       nodeIntegration:  false,
@@ -49,7 +51,7 @@ ipcMain.on('go-full', () => {
 
 ipcMain.on('go-widget', () => {
   win.setAlwaysOnTop(false);
-  win.setResizable(false);
+  win.setResizable(true);
   win.setSize(WIDGET.w, WIDGET.h);
   if (savedWidgetPos) win.setPosition(savedWidgetPos[0], savedWidgetPos[1]);
 });
