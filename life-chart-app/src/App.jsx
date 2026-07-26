@@ -1787,50 +1787,20 @@ export default function App() {
 
   useEffect(() => {
     if (!widgetMode) return;
-    const onWheel = e => {
-      if (selectedCard) return;
-      if (canScrollInside(e.target, e.deltaY)) return;
-      e.preventDefault();
-      movePanel(e.deltaY > 0 ? 1 : -1);
+    const onKeyDown = e => {
+      if (selectedCard || wgtChartOpen) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        movePanel(1);
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        movePanel(-1);
+      }
     };
-    const onTouchStart = e => startSwipe(e.touches[0], e.target);
-    const onTouchMove = e => {
-      if (!touchStart.current) return;
-      const touch = e.touches[0];
-      if (!touch) return;
-      const deltaY = touchStart.current.y - touch.clientY;
-      const deltaX = touchStart.current.x - touch.clientX;
-      const swipeIntent = !isElectron
-        ? Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)
-        : Math.abs(deltaY) > 8 && Math.abs(deltaY) > Math.abs(deltaX);
-      if (swipeIntent && e.cancelable) e.preventDefault();
-    };
-    const onTouchEnd = e => finishSwipe(e.changedTouches[0]);
-    const onPointerDown = e => {
-      if (e.pointerType !== 'touch') return;
-      startSwipe(e, e.target);
-      if (touchStart.current) e.target.setPointerCapture?.(e.pointerId);
-    };
-    const onPointerUp = e => {
-      if (e.pointerType === 'touch') finishSwipe(e);
-    };
-    window.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
-    window.addEventListener('pointerdown', onPointerDown);
-    window.addEventListener('pointerup', onPointerUp);
-    window.addEventListener('pointercancel', onPointerUp);
-    return () => {
-      window.removeEventListener('wheel', onWheel);
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onTouchEnd);
-      window.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('pointerup', onPointerUp);
-      window.removeEventListener('pointercancel', onPointerUp);
-    };
-  }, [widgetMode, selectedCard, isElectron]);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [widgetMode, selectedCard, wgtChartOpen]);
 
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(pos => {
@@ -2623,6 +2593,24 @@ export default function App() {
           opacity:.25; transform:scale(.85);
         }
         .wgt-dot.on { opacity:.9; transform:scale(1.4); }
+        .wgt-nav-arrow {
+          width:32px; height:32px; border-radius:999px;
+          display:grid; place-items:center; flex-shrink:0;
+          border:1px solid rgba(244,200,66,.28);
+          background:rgba(244,200,66,.07);
+          color:var(--gold); cursor:pointer;
+          font-family:'Cinzel',serif; font-size:1.05rem; line-height:1;
+          text-shadow:0 0 8px rgba(244,200,66,.45), 0 0 18px rgba(244,200,66,.22);
+          box-shadow:0 0 18px rgba(244,200,66,.08), inset 0 0 14px rgba(244,200,66,.04);
+          transition:opacity .22s ease, transform .22s ease, border-color .22s ease, background .22s ease;
+          -webkit-app-region:no-drag;
+        }
+        .wgt-nav-arrow:hover:not(:disabled) {
+          opacity:1; transform:translateY(-1px) scale(1.04);
+          border-color:rgba(244,200,66,.6); background:rgba(244,200,66,.12);
+        }
+        .wgt-nav-arrow:disabled { opacity:.18; cursor:default; transform:none; }
+        .wgt-dot-strip { display:flex; align-items:center; justify-content:center; gap:9px; min-width:88px; }
 
         /* ── PWA / mobile full-screen overrides ── */
         .pwa .wgt-shell {
@@ -2647,11 +2635,12 @@ export default function App() {
         .pwa .wgt-bc-btn { font-size:1.15rem; }
         .pwa .wgt-body .pk-kw { font-size:.82rem; line-height:1.7; }
         .pwa .wgt-dots {
-          height:calc(38px + env(safe-area-inset-bottom));
+          height:calc(46px + env(safe-area-inset-bottom));
           padding-bottom:env(safe-area-inset-bottom);
-          gap:12px;
+          gap:14px;
         }
         .pwa .wgt-dot { width:6px; height:6px; }
+        .pwa .wgt-nav-arrow { width:36px; height:36px; font-size:1.12rem; }
 
         .mobile-shell {
           width:100vw; height:100vh; min-height:100vh;
@@ -2708,10 +2697,12 @@ export default function App() {
         .mobile-shell .atc-ft { font-size:.9rem; }
         .mobile-shell .mys-msg { font-size:1.15rem; line-height:1.85; }
         .mobile-shell .wgt-chart-scroll,
+        .mobile-shell .num-msg.compact,
         .mobile-shell .pn,
         .mobile-shell .bc-pn {
           touch-action:pan-y;
           -webkit-overflow-scrolling:touch;
+          overscroll-behavior:contain;
         }
         .mobile-shell .chart-open-shell .wgt-hdr { display:none; }
         .mobile-shell .chart-open-shell .wgt-body {
@@ -3097,9 +3088,23 @@ export default function App() {
           {/* Panel nav dots — hidden when in-widget chart is open */}
           {!wgtChartOpen && (
             <div className="wgt-dots" style={{WebkitAppRegion:'no-drag'}}>
-              {[0,1,2,3,4,5,6].map(i => (
-                <div key={i} className={`wgt-dot${i===panelIdx?' on':''}`} onClick={() => setPanelIdx(i)} />
-              ))}
+              <button
+                className="wgt-nav-arrow"
+                aria-label="Previous section"
+                disabled={panelIdx === 0}
+                onClick={() => movePanel(-1)}
+              >‹</button>
+              <div className="wgt-dot-strip" aria-label="Sections">
+                {[0,1,2,3,4,5,6].map(i => (
+                  <div key={i} className={`wgt-dot${i===panelIdx?' on':''}`} onClick={() => setPanelIdx(i)} />
+                ))}
+              </div>
+              <button
+                className="wgt-nav-arrow"
+                aria-label="Next section"
+                disabled={panelIdx === 6}
+                onClick={() => movePanel(1)}
+              >›</button>
             </div>
           )}
         </div>
