@@ -1614,6 +1614,72 @@ const MYSTERY_MSGS = [
   "Enjoy this map that has no limits to what it may reveal or how far it can expand... a map that begins and lives with and as YOU!",
 ];
 
+const NUMBER_MESSAGES = [
+  { n: '1', startLead: 'Begin noticing.', start: 'Pay attention, something new is revealing itself to you through thoughts, synchronicities, and words spoken through others.', stopLead: 'Stop centering yourself for a moment.', stop: "It's time to take the focus off of you for a moment and focus on something or someone new." },
+  { n: '2', startLead: 'Begin connecting.', start: 'Its time to connect with others and the Divine in a more truthful way.', stopLead: 'Stop circling the decision.', stop: "It's time to stop overthinking a relationship and make a decision that honors everyone involved (especially you)." },
+  { n: '3', startLead: 'Begin celebrating.', start: 'Celebrate the big and small things unfolding in your life. More is on its way.', stopLead: 'Stop feeding uncertainty.', stop: "It's time to shift focus from fear or uncertainty to immediate creative expression - or anxiety may amplify." },
+  { n: '4', startLead: 'Begin building.', start: 'Put time and attention into building a foundation that helps you feel safe, secure, and supported to experience your dreams. You are on path.', stopLead: 'Stop working so hard.', stop: "Stop working so hard. It's okay to rest into what you have created, or who you have become and know that it will be enough for the journey ahead. Change is coming but you are ready." },
+  { n: '5', startLead: 'Begin saying yes.', start: "Connect with others, meet new people, and do things you have never done (or haven't done in a while. Change is in the air and you can expect travel, new people, and new experiences to open doors. Say yes to more.", stopLead: 'Stop mistaking freedom for avoidance.', stop: 'Stop overvaluing or prioritizing freedom to the detriment of your success.' },
+  { n: '6', startLead: 'Begin choosing higher expression.', start: 'Your purpose is calling you to higher expression. This moment is the fulfillment of a previous dream, but the Universe has more if you are willing to choose it.', stopLead: 'Stop waiting for perfect timing.', stop: 'Stop waiting for the perfect moment to act. Your dreams are calling you now.' },
+  { n: '7', startLead: 'Begin the leap.', start: 'Its time for a leap of faith. This is a number that invites bold new actions - but only those that match where you want to take your life. Take a step back and consider the implications...then, leap.', stopLead: 'Stop second-guessing your desire.', stop: 'Interrupt your habit of second-guessing yourself. What you want is valid and worthwhile.' },
+  { n: '8', startLead: 'Begin receiving more.', start: 'Its time to welcome more. The frequency of abundance is all around you and ready to increase the returns for everything you are participating in.', stopLead: 'Stop entering power struggles.', stop: 'Ditch any power struggles in relationships. You may be feeling the need to rescue others or stand up to them. Harmony will provide a new approach.' },
+  { n: '9', startLead: 'Begin pruning.', start: "Its time to choose between fulfillment or accumulation. Start pruning anything in your life that doesn't match what you have been creating and the Universe will fill that space.", stopLead: 'Stop treating transition like collapse.', stop: "It's time to drop the idea that everything is ending or falling apart. Life wants to fulfill your dreams, not take them away. This too shall pass." },
+  { n: '10', startLead: 'Begin speaking.', start: 'Its time to speak up and share your vision. Your leadership skills are being developed.', stopLead: 'Stop doing for others what belongs to them.', stop: 'Stop doing for others what they need to learn to do for themselves. If you are managing people and experiences its time to step back.' },
+  { n: '11', startLead: 'Begin waking up.', start: 'Wake up. You are being activated into a new paradigm of awareness.', stopLead: 'Stop looking with old eyes.', stop: 'Its time to look at something happening around you and see it with new eyes. This is a wake up call.' },
+];
+
+function NumberMessages({ day, compact=false }) {
+  return (
+    <div className={`num-msg ${day ? 'day' : 'night'}${compact ? ' compact' : ''}`}>
+      <div className="num-msg-top">
+        <div className="num-msg-sigil" aria-hidden="true">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="29" strokeWidth="1" opacity=".38"/>
+            <polygon points="40,8 68,58 12,58" strokeWidth="1.15" opacity=".72"/>
+            <path d="M16 40 H64 M40 8 L40 58 M24 22 L56 58 M56 22 L24 58" strokeWidth=".9" opacity=".45"/>
+            <circle cx="40" cy="40" r="4.5" strokeWidth="1" opacity=".86"/>
+          </svg>
+        </div>
+        <div>
+          <div className="num-msg-eyebrow">Messages from the Numbers</div>
+          <div className="num-msg-title">Start & Stop</div>
+          <div className="num-msg-sub">Two companion charts — aligned by number.</div>
+        </div>
+      </div>
+      <div className="num-msg-pages">
+        <article className="num-msg-page start">
+          <div className="num-msg-page-head">
+            <div className="num-msg-page-title">What to Start</div>
+            <div className="num-msg-page-sub">Open the door. Follow the first honest signal.</div>
+          </div>
+          <div className="num-msg-list">
+            {NUMBER_MESSAGES.map(item => (
+              <div className="num-msg-row" key={`start-${item.n}`}>
+                <div className="num-msg-num">{item.n}</div>
+                <div className="num-msg-copy"><strong>{item.startLead}</strong>{item.start}</div>
+              </div>
+            ))}
+          </div>
+        </article>
+        <article className="num-msg-page stop">
+          <div className="num-msg-page-head">
+            <div className="num-msg-page-title">What to Stop</div>
+            <div className="num-msg-page-sub">Close the leak. Return your energy to what is true.</div>
+          </div>
+          <div className="num-msg-list">
+            {NUMBER_MESSAGES.map(item => (
+              <div className="num-msg-row" key={`stop-${item.n}`}>
+                <div className="num-msg-num">{item.n}</div>
+                <div className="num-msg-copy"><strong>{item.stopLead}</strong>{item.stop}</div>
+              </div>
+            ))}
+          </div>
+        </article>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [coords, setCoords] = useState(loadCoords);
   const [day, setDay] = useState(() => isDaytime(loadCoords()));
@@ -1651,7 +1717,7 @@ export default function App() {
   const goWidget = () => { setWidgetMode(true); setPanelIdx(0); window.electronAPI?.goWidget(); };
 
   useEffect(() => {
-    const active = showMystery || (widgetMode && panelIdx === 2);
+    const active = showMystery || (widgetMode && panelIdx === 3);
     if (!active) return;
     const cycle = setInterval(() => {
       setMysteryVis(false);
@@ -1664,7 +1730,7 @@ export default function App() {
   }, [showMystery, widgetMode, panelIdx]);
 
   useEffect(() => {
-    if (widgetMode && panelIdx === 2) { setMysteryIdx(0); setMysteryVis(true); }
+    if (widgetMode && panelIdx === 3) { setMysteryIdx(0); setMysteryVis(true); }
   }, [widgetMode, panelIdx]);
 
   const lastWheelRef = useRef(0);
@@ -1673,7 +1739,7 @@ export default function App() {
     const now = Date.now();
     if (now - lastWheelRef.current < 350) return;
     lastWheelRef.current = now;
-    setPanelIdx(i => direction > 0 ? Math.min(i + 1, 4) : Math.max(i - 1, 0));
+    setPanelIdx(i => direction > 0 ? Math.min(i + 1, 5) : Math.max(i - 1, 0));
   };
 
   const canSwipeFrom = (target) => {
@@ -2074,6 +2140,58 @@ export default function App() {
         .atc.day   .atc-ft  { color:#9B88B0; }
         .atc.night .atc-ft  { color:#6B5F88; }
         .atc-your { color:#E8B84B; text-shadow:0 0 6px rgba(255,210,80,.55),0 0 14px rgba(255,200,60,.3),0 0 26px rgba(255,185,40,.18); font-style:normal; }
+
+        /* Messages from the Numbers — between ATC and PK */
+        .num-msg { font-family:'Cormorant Garamond',serif; width:620px; max-width:calc(100vw - 2rem); padding:1.25rem 1.35rem 1.25rem; border-radius:16px; border:1px solid var(--bdr); background:linear-gradient(180deg,var(--cbg),rgba(255,255,255,.012)); box-shadow:0 18px 50px rgba(0,0,0,.22), inset 0 0 0 1px rgba(255,255,255,.025); backdrop-filter:blur(14px); overflow:hidden; position:relative; }
+        .num-msg::before { content:""; position:absolute; top:-84px; right:-70px; width:190px; height:190px; border-radius:50%; border:1px solid rgba(244,200,66,.13); box-shadow:inset 0 0 0 35px rgba(135,206,235,.025), inset 0 0 0 68px rgba(244,200,66,.025); pointer-events:none; opacity:.9; }
+        .num-msg-top { position:relative; display:grid; grid-template-columns:58px 1fr; gap:.85rem; align-items:center; margin-bottom:1rem; height:92px; }
+        .num-msg-sigil { width:56px; height:56px; border-radius:50%; display:grid; place-items:center; border:1px solid rgba(135,206,235,.24); background:rgba(135,206,235,.035); box-shadow:0 0 22px rgba(135,206,235,.08); }
+        .num-msg-sigil svg { width:42px; height:42px; overflow:visible; filter:drop-shadow(0 0 8px rgba(135,206,235,.28)); }
+        .num-msg-sigil path, .num-msg-sigil circle, .num-msg-sigil polygon { stroke:#87CEEB; }
+        .num-msg.day .num-msg-sigil path, .num-msg.day .num-msg-sigil circle, .num-msg.day .num-msg-sigil polygon { stroke:#486d88; }
+        .num-msg-eyebrow { display:inline-block; font-family:'Cinzel',serif; font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); border:1px solid var(--bdr); border-radius:999px; padding:.35rem .6rem .38rem; background:var(--goldf); margin-bottom:.45rem; }
+        .num-msg-title { font-family:'Cinzel',serif; font-size:1.5rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text); line-height:1; text-shadow:0 0 18px rgba(244,200,66,.14); }
+        .num-msg-sub { margin-top:.35rem; color:var(--textd); font-size:.9rem; font-style:italic; letter-spacing:.025em; }
+        .num-msg-pages { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:.85rem; align-items:stretch; }
+        .num-msg-page { display:flex; flex-direction:column; min-width:0; }
+        .num-msg-page-head { height:66px; border:1px solid var(--bdr); border-bottom:0; border-radius:13px 13px 0 0; background:rgba(244,200,66,.04); padding:.8rem .9rem; display:flex; flex-direction:column; justify-content:center; }
+        .num-msg-page-title { font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text); }
+        .num-msg-page-sub { margin-top:.24rem; color:var(--textd); font-size:.78rem; font-style:italic; line-height:1.2; }
+        .num-msg-list { border:1px solid var(--bdr); border-radius:0 0 13px 13px; overflow:hidden; background:rgba(255,255,255,.018); flex:1; }
+        .num-msg-row { display:grid; grid-template-columns:34px 1fr; height:118px; align-items:stretch; border-bottom:1px solid var(--bdrf); }
+        .num-msg-row:last-child { border-bottom:0; }
+        .num-msg-num { display:grid; place-items:center; border-right:1px solid var(--bdrf); background:rgba(244,200,66,.035); font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.08em; color:var(--gold); }
+        .num-msg-copy { padding:.65rem .7rem .7rem; font-size:.82rem; line-height:1.28; color:var(--text); text-wrap:pretty; background:rgba(255,255,255,.012); overflow:hidden; }
+        .num-msg-copy strong { display:block; font-weight:400; margin-bottom:.12rem; font-size:.84rem; }
+        .num-msg-page.start .num-msg-copy strong { color:#87CEEB; text-shadow:0 0 10px rgba(135,206,235,.24); }
+        .num-msg-page.stop .num-msg-page-head { border-color:rgba(155,126,212,.28); background:rgba(155,126,212,.055); }
+        .num-msg-page.stop .num-msg-num { color:#D4CCF0; }
+        .num-msg-page.stop .num-msg-copy strong { color:var(--gold); text-shadow:0 0 10px rgba(244,200,66,.24); }
+        .left-widgets .num-msg { width:295px; padding:1.05rem 1.05rem 1rem; border-radius:13px; }
+        .left-widgets .num-msg-top { grid-template-columns:44px 1fr; gap:.65rem; height:70px; margin-bottom:.75rem; }
+        .left-widgets .num-msg-sigil { width:42px; height:42px; }
+        .left-widgets .num-msg-sigil svg { width:32px; height:32px; }
+        .left-widgets .num-msg-title { font-size:1.05rem; }
+        .left-widgets .num-msg-sub { display:none; }
+        .left-widgets .num-msg-pages { gap:.55rem; }
+        .left-widgets .num-msg-page-head { height:56px; padding:.55rem .5rem; }
+        .left-widgets .num-msg-page-title { font-size:.55rem; letter-spacing:.1em; }
+        .left-widgets .num-msg-page-sub { font-size:.62rem; }
+        .left-widgets .num-msg-row { grid-template-columns:24px 1fr; height:112px; }
+        .left-widgets .num-msg-copy { padding:.45rem .45rem .5rem; font-size:.67rem; line-height:1.18; }
+        .left-widgets .num-msg-copy strong { font-size:.68rem; }
+        .num-msg.compact { width:100%; height:100%; padding:1rem; overflow-y:auto; scrollbar-width:thin; }
+        .num-msg.compact .num-msg-top { grid-template-columns:44px 1fr; height:70px; margin-bottom:.75rem; }
+        .num-msg.compact .num-msg-sigil { width:42px; height:42px; }
+        .num-msg.compact .num-msg-sigil svg { width:32px; height:32px; }
+        .num-msg.compact .num-msg-title { font-size:1.1rem; }
+        .num-msg.compact .num-msg-pages { gap:.55rem; }
+        .num-msg.compact .num-msg-page-head { height:56px; padding:.55rem .5rem; }
+        .num-msg.compact .num-msg-page-title { font-size:.55rem; letter-spacing:.1em; }
+        .num-msg.compact .num-msg-page-sub { font-size:.62rem; }
+        .num-msg.compact .num-msg-row { grid-template-columns:24px 1fr; height:112px; }
+        .num-msg.compact .num-msg-copy { padding:.45rem .45rem .5rem; font-size:.67rem; line-height:1.18; }
+        .num-msg.compact .num-msg-copy strong { font-size:.68rem; }
 
         /* Planetary Keywords — stacked below ATC inside left-widgets */
         .pk {
@@ -2749,6 +2867,10 @@ export default function App() {
             )}
 
             {panelIdx === 1 && (
+              <NumberMessages day={day} compact />
+            )}
+
+            {panelIdx === 2 && (
               <div className={`pk ${day?"day":"night"}`}>
                 <div className="pk-ht">Planetary Keywords</div>
                 <div className="pk-rl" />
@@ -2770,7 +2892,7 @@ export default function App() {
               </div>
             )}
 
-            {panelIdx === 3 && !wgtChartOpen && (
+            {panelIdx === 4 && !wgtChartOpen && (
               <div className="wgt-chart-panel" onClick={() => setWgtChartOpen(true)}>
                 <div className="wgt-chart-glow" />
                 <svg className="wgt-sacred-geo" viewBox="4 4 92 92" xmlns="http://www.w3.org/2000/svg">
@@ -2839,7 +2961,7 @@ export default function App() {
               </div>
             )}
 
-            {panelIdx === 3 && wgtChartOpen && (
+            {panelIdx === 4 && wgtChartOpen && (
               <div className={isMobileShell ? "mobile-chart-open" : ""} style={{width:'100%',display:'flex',flexDirection:'column',animation:'fi .3s ease both',height:'100%'}}>
                 <button className="wgt-chart-back" onClick={() => setWgtChartOpen(false)}>← Back</button>
                 <div className="wgt-chart-scroll" style={{flex:1,overflowY:'auto',overflowX:isMobileShell?'hidden':'hidden',position:'relative'}}>
@@ -2903,7 +3025,7 @@ export default function App() {
               </div>
             )}
 
-            {panelIdx === 2 && (
+            {panelIdx === 3 && (
               <div className={`mys-pnl ${day?"day":"night"}`}>
                 <div className="mys-pnl-ht">✦ The Mystery ✦</div>
                 <div className="mys-pnl-rl" />
@@ -2917,7 +3039,7 @@ export default function App() {
               </div>
             )}
 
-            {panelIdx === 4 && (
+            {panelIdx === 5 && (
               <div className={`sitd ${day?"day":"night"}`}>
                 <div className="sitd-ht">Step Into Your Day</div>
                 <div className="sitd-sub">with Destiny</div>
@@ -2936,7 +3058,7 @@ export default function App() {
           {/* Panel nav dots — hidden when in-widget chart is open */}
           {!wgtChartOpen && (
             <div className="wgt-dots" style={{WebkitAppRegion:'no-drag'}}>
-              {[0,1,2,3,4].map(i => (
+              {[0,1,2,3,4,5].map(i => (
                 <div key={i} className={`wgt-dot${i===panelIdx?' on':''}`} onClick={() => setPanelIdx(i)} />
               ))}
             </div>
@@ -2982,6 +3104,8 @@ export default function App() {
         ))}
         <div className="atc-ft">Your Birthday is the First Day of <span className="atc-your">Your</span> Year</div>
       </div>
+
+      <NumberMessages day={day} />
 
       <div className={`pk ${day ? "day" : "night"}`}>
         <div className="pk-ht">Planetary Keywords</div>
