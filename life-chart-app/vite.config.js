@@ -28,7 +28,9 @@ export default defineConfig({
       },
     }),
   ].filter(Boolean),
-  base: isElectron ? './' : '/life-chart-app/',
+  // Use relative assets so the PWA works from the GitHub Pages subfolder
+  // /Apps/life-chart-app/docs/ as well as local/Electron builds.
+  base: './',
   server: {
     port: 5173,
     strictPort: true,
